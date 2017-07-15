@@ -1,23 +1,32 @@
 import mongoose from 'mongoose';
-import helpers from '../helpers/helpers';
+import sendJsonResponse from '../helpers/helpers';
+
 const Component = mongoose.model('Component');
 
-module.exports.createComponent = function(req, res) {
+function createComponent(req, res) {
   
 }
 
-module.exports.returnComponents = function(req, res) {
+function returnComponents(req, res) {
 
 }
 
-module.exports.returnComponentById = function(req, res) {
+function returnComponentById(req, res) {
 
 }
 
-module.exports.updateComponentById = function(req, res) {
+function updateComponentById(req, res) {
 
 }
 
-module.exports.deleteComponentById = function(req, res) {
+function deleteComponentById(req, res) {
 
+}
+
+export {
+  createComponent,
+  returnComponents,
+  returnComponentById,
+  updateComponentById,
+  deleteComponentById
 }

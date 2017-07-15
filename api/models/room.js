@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import ComponentSchema from './component';
 
+mongoose.Promise = global.Promise;
 const RoomSchema = new mongoose.Schema({
   description: {
     type: String,
@@ -9,4 +10,4 @@ const RoomSchema = new mongoose.Schema({
   components: [ComponentSchema]
 });
 
-module.exports = RoomSchema;
+export default RoomSchema;

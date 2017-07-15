@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import UserSchema from './user';
 import ResidenceSchema from './residence';
 
+mongoose.Promise = global.Promise;
 const AccountSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -14,8 +15,8 @@ const AccountSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  users: [UserSchema],
-  residences: [ResidenceSchema]
+  residences: [ResidenceSchema],
+  users: [UserSchema]
 });
 
 mongoose.model('Account', AccountSchema);

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+mongoose.Promise = global.Promise;
 const BoardSchema = new mongoose.Schema({
   description: {
     type: String,
@@ -23,4 +24,4 @@ const BoardSchema = new mongoose.Schema({
   }
 });
 
-module.exports = BoardSchema;
+export default BoardSchema;

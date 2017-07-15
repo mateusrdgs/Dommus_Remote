@@ -1,23 +1,32 @@
 import mongoose from 'mongoose';
-import helpers from '../helpers/helpers';
+import sendJsonResponse from '../helpers/helpers';
+
 const Residence = mongoose.model('Residence');
 
-module.exports.createResidence = function(req, res) {
+function createResidence(req, res) {
   
 }
 
-module.exports.returnResidences = function(req, res) {
+function returnResidences(req, res) {
 
 }
 
-module.exports.returnResidenceById = function(req, res) {
+function returnResidenceById(req, res) {
 
 }
 
-module.exports.updateResidenceById = function(req, res) {
+function updateResidenceById(req, res) {
 
 }
 
-module.exports.deleteResidenceById = function(req, res) {
+function deleteResidenceById(req, res) {
 
+}
+
+export {
+  createResidence,
+  returnResidences,
+  returnResidenceById,
+  updateResidenceById,
+  deleteResidenceById
 }

@@ -1,23 +1,32 @@
 import mongoose from 'mongoose';
-import helpers from '../helpers/helpers';
+import sendJsonResponse from '../helpers/helpers';
+
 const Room = mongoose.model('Room');
 
-module.exports.createRoom = function(req, res) {
+function createRoom(req, res) {
   
 }
 
-module.exports.returnRooms = function(req, res) {
+function returnRooms(req, res) {
 
 }
 
-module.exports.returnRoomById = function(req, res) {
+function returnRoomById(req, res) {
 
 }
 
-module.exports.updateRoomById = function(req, res) {
+function updateRoomById(req, res) {
 
 }
 
-module.exports.deleteRoomById = function(req, res) {
+function deleteRoomById(req, res) {
 
+}
+
+export {
+  createRoom,
+  returnRooms,
+  returnRoomById,
+  updateRoomById,
+  deleteRoomById
 }

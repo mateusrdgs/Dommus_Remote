@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+mongoose.Promise = global.Promise;
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -14,4 +15,4 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-module.exports = UserSchema;
+export default UserSchema;

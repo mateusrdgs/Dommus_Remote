@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import RoomSchema from './room';
 import BoardSchema from './board';
 
+mongoose.Promise = global.Promise;
 const ResidenceSchema = new mongoose.Schema({
   description: {
     type: String,
@@ -15,4 +16,4 @@ const ResidenceSchema = new mongoose.Schema({
   boards: [BoardSchema]
 });
 
-module.exports = ResidenceSchema;
+export default ResidenceSchema;
