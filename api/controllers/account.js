@@ -34,16 +34,16 @@ function createAccount(req, res) {
 }
 
 function returnAccount(req, res) {
-  if(!req.params.id) {
+  if(!req.params.idAccount) {
     sendJsonResponse(res, 400, { 
       'Message': 'Field Id required' 
     });
     return;
   }
   else {
-    const id = req.params.id;
+    const idAccount = req.params.idAccount;
     Account
-    .findById(id)
+    .findById(idAccount)
     .then(account => {
       if(account) {          
         sendJsonResponse(res, 200, { 
@@ -68,16 +68,16 @@ function returnAccount(req, res) {
 }
 
 function updateAccount(req, res) {
-  if(!req.params.id) {
+  if(!req.params.idAccount) {
     sendJsonResponse(res, 400, {
       'Message': 'Field Id required!'
     });
     return;
   }
   else {
-    const id = req.params.id;
+    const idAccount = req.params.idAccount;
     Account
-    .findById(id)
+    .findById(idAccount)
     .then((account) => {
       if(account) {
         account.email = req.body.email || account.email;
@@ -110,15 +110,15 @@ function updateAccount(req, res) {
 }
 
 function deleteAccount(req, res) {
-  if(!req.params.id) {
+  if(!req.params.idAccount) {
     sendJsonResponse(res, 400, {
       'Message': 'Field Id required!'
     });
   }
   else {
-    const id = req.params.id;
+    const idAccount = req.params.idAccount;
     Account
-    .findByIdAndRemove(id)
+    .findByIdAndRemove(idAccount)
     .then(account => {
       if(!account) {
         sendJsonResponse(res, 404, {

@@ -19,11 +19,11 @@ function createUser(req, res) {
       return;
     }
     else {
-      const id = req.params.id;
+      const idAccount = req.params.idAccount;
       const name = req.body.name;
       const type = req.body.type;
       Account
-      .findById(id)
+      .findById(idAccount)
       .then(account => {
         if(!account) {          
           sendJsonResponse(res, 404, {
@@ -63,16 +63,16 @@ function createUser(req, res) {
 }
 
 function returnUsers(req, res) {
-  if(!req.params.id) {
+  if(!req.params.idAccount) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
   else {
-    const id = req.params.id;
+    const idAccount = req.params.idAccount;
     Account
-    .findById(id)
+    .findById(idAccount)
     .then(account => {
       if(!account) {
         sendJsonResponse(res, 400, {

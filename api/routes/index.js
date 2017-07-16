@@ -5,13 +5,13 @@ import * as residenceController from '../controllers/residence';
 
 const router = express.Router();
 
-router.get('/account/:id', accountController.returnAccount);
 router.post('/account', accountController.createAccount);
-router.put('/account/:id', accountController.updateAccount);
-router.delete('/account/:id', accountController.deleteAccount);
+router.get('/account/:idAccount', accountController.returnAccount);
+router.put('/account/:idAccount', accountController.updateAccount);
+router.delete('/account/:idAccount', accountController.deleteAccount);
 
-router.post('/account/:id/users', userController.createUser);
-router.get('/account/:id/users', userController.returnUsers);
+router.post('/account/:idAccount/users', userController.createUser);
+router.get('/account/:idAccount/users', userController.returnUsers);
 router.get('/account/:idAccount/users/:idUser', userController.returnUserById);
 router.put('/account/:idAccount/users/:idUser', userController.updateUserById);
 router.delete('/account/:idAccount/users/:idUser', userController.deleteUserById);
