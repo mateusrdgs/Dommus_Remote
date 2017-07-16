@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import sendJsonResponse from '../helpers/helpers';
+import { sendJsonResponse } from '../helper/helper';
 
 const Component = mongoose.model('Component');
 

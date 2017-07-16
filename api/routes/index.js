@@ -9,10 +9,10 @@ router.post('/account', accountController.createAccount);
 router.put('/account/:id', accountController.updateAccount);
 router.delete('/account/:id', accountController.deleteAccount);
 
-router.post('/account/:id/users/:id', userController.createUser);
+router.post('/account/:id/users', userController.createUser);
 router.get('/account/:id/users', userController.returnUsers);
-router.get('/account/:id/users/:id', userController.returnUserById);
-router.put('/account/:id/users/:id', userController.updateUser);
-router.delete('/account/:id/users/:id', userController.deleteUser);
+router.get('/account/:idAccount/users/:idUser', userController.returnUserById);
+router.put('/account/:idAccount/users/:idUser', userController.updateUserById);
+router.delete('/account/:idAccount/users/:idUser', userController.deleteUserById);
 
 export default router;

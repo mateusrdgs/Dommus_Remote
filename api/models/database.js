@@ -1,4 +1,10 @@
 import mongoose from 'mongoose';
+import './account';
+import './board';
+import './component';
+import './residence';
+import './room';
+import './user';
 
 let databaseURI = 'mongodb://localhost:27017/remote';
 
@@ -37,10 +43,3 @@ process.on('SIGTERM', () => {
     process.exit(0);
   });
 });
-
-import './account';
-import './board';
-import './component';
-import './residence';
-import './room';
-import './user';

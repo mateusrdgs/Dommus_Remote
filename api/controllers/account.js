@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import sendJsonResponse from '../helpers/helpers';
+import { sendJsonResponse } from '../helper/helper';
 
 const Account = mongoose.model('Account');
 
@@ -43,27 +43,27 @@ function returnAccount(req, res) {
   else {
     const id = req.params.id;
     Account
-      .findById(id)
-      .then(account => {
-        if(account) {          
-          sendJsonResponse(res, 200, { 
-            'Account': account
-          });
-          return;
-        }
-        else if(!account) {          
-          sendJsonResponse(res, 404, { 
-            'Message': 'Account not found!' 
-          });
-          return;
-        }
-      }, error => {
-          console.log(error.message);
-          sendJsonResponse(res, 400, { 
-            'Error': error.message 
-          });
-          return;
+    .findById(id)
+    .then(account => {
+      if(account) {          
+        sendJsonResponse(res, 200, { 
+          'Account': account
+        });
+        return;
+      }
+      else if(!account) {          
+        sendJsonResponse(res, 404, { 
+          'Message': 'Account not found!' 
+        });
+        return;
+      }
+    }, error => {
+      console.log(error.message);
+      sendJsonResponse(res, 400, { 
+        'Error': error.message 
       });
+      return;
+    });
   }
 }
 
@@ -77,35 +77,35 @@ function updateAccount(req, res) {
   else {
     const id = req.params.id;
     Account
-      .findById(id)
-      .then((account) => {
-        if(account) {
-          account.email = req.body.email || account.email;
-          account.pin = req.body.pin || account.pin;
-          account.save((error, account) => {
-            if(error) {
-              sendJsonResponse(res, 400, { 
-                'Error': error.message 
-              });
-            } 
-            else {
-              sendJsonResponse(res, 200, { 
-                'Account': account 
-              });
-            }
-          });
-        }
-        else {
-          sendJsonResponse(res, 404, { 
-            'Message': 'Account not found!'
-          });
-          return;
-        }
-      }, error => {
-        sendJsonResponse(res, 400, { 
-          'error': error.message 
+    .findById(id)
+    .then((account) => {
+      if(account) {
+        account.email = req.body.email || account.email;
+        account.pin = req.body.pin || account.pin;
+        account.save((error, account) => {
+          if(error) {
+            sendJsonResponse(res, 400, { 
+              'Error': error.message 
+            });
+          } 
+          else {
+            sendJsonResponse(res, 200, { 
+              'Account': account 
+            });
+          }
         });
+      }
+      else {
+        sendJsonResponse(res, 404, { 
+          'Message': 'Account not found!'
+        });
+        return;
+      }
+    }, error => {
+      sendJsonResponse(res, 400, { 
+        'error': error.message 
       });
+    });
   }
 }
 
@@ -118,23 +118,23 @@ function deleteAccount(req, res) {
   else {
     const id = req.params.id;
     Account
-      .findByIdAndRemove(id)
-      .then(account => {
-        if(!account) {
-          sendJsonResponse(res, 404, {
-            'Error': 'Account not found!'
-          });
-        }
-        else {
-          sendJsonResponse(res, 200, { 
-            'Account': account
-          });
-        }        
-      }, error => {
-        sendJsonResponse(res, 400, {
-          'Error': error
+    .findByIdAndRemove(id)
+    .then(account => {
+      if(!account) {
+        sendJsonResponse(res, 404, {
+          'Error': 'Account not found!'
         });
+      }
+      else {
+        sendJsonResponse(res, 200, { 
+          'Account': account
+        });
+      }        
+    }, error => {
+      sendJsonResponse(res, 400, {
+        'Error': error
       });
+    });
   }
 }
 
