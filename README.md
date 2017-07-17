@@ -14,7 +14,35 @@ Soon
 
 ## Folders structure
 
-Soon
+    .
+    ├── api/
+    |   ├── controllers/
+    |   |   └── account.js
+    |   |   └── component.js
+    |   |   └── residence.js
+    |   |   └── room.js
+    |   |   └── user.js
+    |   ├── helper/
+    |   |   └── helper.js
+    |   ├── models/
+    |   |   └── account.js
+    |   |   └── board.js
+    |   |   └── component.js
+    |   |   └── database.js
+    |   |   └── residence.js
+    |   |   └── room.js
+    |   |   └── user.js
+    |   ├── routes/
+    |   |   └── index.js
+    ├── .babelrc
+    ├── .eslintrc
+    ├── .gitignore
+    ├── index.js
+    ├── LICENSE
+    ├── nodemon.json
+    ├── package.json
+    ├── README.md
+    └── yarn.lock
 
 ## Versioning
 
