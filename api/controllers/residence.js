@@ -127,19 +127,28 @@ function returnResidenceById(req, res) {
           return;
         }
         else {
-          const residence = account.residences.id(idResidence);
-          if(!residence) {
+          const residences = account.residences;
+          if(!residences.length) {
             sendJsonResponse(res, 404, {
-              'Message': 'Residence not found!'
+              'Message': 'No residences found!'
             });
             return;
           }
           else {
-            sendJsonResponse(res, 200, {
-              'Residence': residence
-            });
-            return;
-          }
+            const residence = account.residences.id(idResidence);
+            if(!residence) {
+              sendJsonResponse(res, 404, {
+                'Message': 'Residence not found!'
+              });
+              return;
+            }
+            else {
+              sendJsonResponse(res, 200, {
+                'Residence': residence
+              });
+              return;
+            }
+          }          
         }
       }, error => {
         sendJsonResponse(res, 500, {
@@ -179,7 +188,7 @@ function updateResidenceById(req, res) {
         }
         else {
           const residences = account.residences;
-          if(!residences) {
+          if(!residences.length) {
             sendJsonResponse(res, 400, {
               'Message': 'No residences on this account!'
             });
@@ -258,7 +267,7 @@ function deleteResidenceById(req, res) {
         }
         else {
           const residences = account.residences;
-          if(!residences) {
+          if(!residences.length) {
             sendJsonResponse(res, 400, {
               'Message': 'No residences on this account!'
             });

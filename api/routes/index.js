@@ -25,8 +25,8 @@ router.delete('/account/:idAccount/residences/:idResidence', residenceController
 
 router.post('/account/:idAccount/residences/:idResidence/room', roomController.createRoom);
 router.get('/account/:idAccount/residences/:idResidence/room', roomController.returnRooms);
-router.get('/account/:idAccount/residences/:idResidence/:idResidence/room/:idRoom', roomController.returnRoomById);
-router.put('/account/:idAccount/residences/:idResidence/:idResidence/room/:idRoom', roomController.updateRoomById);
-router.delete('/account/:idAccount/residences/:idResidence/:idResidence/room/:idRoom', roomController.deleteRoomById);
+router.get('/account/:idAccount/residences/:idResidence/room/:idRoom', roomController.returnRoomById);
+router.put('/account/:idAccount/residences/:idResidence/room/:idRoom', roomController.updateRoomById);
+router.delete('/account/:idAccount/residences/:idResidence/room/:idRoom', roomController.deleteRoomById);
 
 export default router;
