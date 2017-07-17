@@ -10,4 +10,6 @@ const RoomSchema = new mongoose.Schema({
   components: [ComponentSchema]
 });
 
+mongoose.model('Room', RoomSchema);
+
 export default RoomSchema;

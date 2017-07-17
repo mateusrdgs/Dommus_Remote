@@ -2,6 +2,7 @@ import express from 'express';
 import * as accountController from '../controllers/account';
 import * as userController from '../controllers/user';
 import * as residenceController from '../controllers/residence';
+import * as roomController from '../controllers/room';
 
 const router = express.Router();
 
@@ -21,5 +22,11 @@ router.get('/account/:idAccount/residences', residenceController.returnResidence
 router.get('/account/:idAccount/residences/:idResidence', residenceController.returnResidenceById);
 router.put('/account/:idAccount/residences/:idResidence', residenceController.updateResidenceById);
 router.delete('/account/:idAccount/residences/:idResidence', residenceController.deleteResidenceById);
+
+router.post('/account/:idAccount/residences/:idResidence/room', roomController.createRoom);
+router.get('/account/:idAccount/residences/:idResidence/room', roomController.returnRooms);
+router.get('/account/:idAccount/residences/:idResidence/:idResidence/room/:idRoom', roomController.returnRoomById);
+router.put('/account/:idAccount/residences/:idResidence/:idResidence/room/:idRoom', roomController.updateRoomById);
+router.delete('/account/:idAccount/residences/:idResidence/:idResidence/room/:idRoom', roomController.deleteRoomById);
 
 export default router;

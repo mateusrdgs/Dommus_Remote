@@ -13,7 +13,7 @@ const ResidenceSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  dependencies: [RoomSchema],
+  rooms: [RoomSchema],
   boards: [BoardSchema]
 });
 
