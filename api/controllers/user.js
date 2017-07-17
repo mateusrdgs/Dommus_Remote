@@ -32,7 +32,8 @@ function createUser(req, res) {
           return;
         }
         else {
-          account.users.push(new User({
+          const users = account.users;
+          users.push(new User({
             name,
             type
           }));          
@@ -44,9 +45,9 @@ function createUser(req, res) {
               return;
             }
             else {
-              const lastIndex = account.users.length - 1;              
+              const lastIndex = users.length - 1;              
               sendJsonResponse(res, 200, { 
-                'User': account.users[lastIndex]
+                'User': users[lastIndex]
               });
               return;
             }
@@ -137,7 +138,7 @@ function returnUserById(req, res) {
             return;
           }
           else {            
-            const user = account.users.id(idUser);            
+            const user = users.id(idUser);            
             if(!user) {
               sendJsonResponse(res, 404, {
                 'Message': 'User not found!'
@@ -197,7 +198,7 @@ function updateUserById(req, res) {
             return;
           }
           else {            
-            const user = account.users.id(idUser);
+            const user = users.id(idUser);
             if(!user) {
               sendJsonResponse(res, 404, {
                 'Message': 'User not found!'
@@ -220,9 +221,9 @@ function updateUserById(req, res) {
                     });
                   }
                   else {
-                   sendJsonResponse(res, 200, {
-                     'User': account.users.id(idUser)
-                   });
+                    sendJsonResponse(res, 200, {
+                      'User': account.users.id(idUser)
+                    });
                     return;
                   }
                 })
@@ -266,30 +267,39 @@ function deleteUserById(req, res) {
           return;
         }
         else {
-          const user = account.users.id(idUser);
-          if(!user) {
+          const users = account.users;
+          if(!users) {
             sendJsonResponse(res, 400, {
-              'Message': 'User not found!'
+              'Message': 'No users on this account!'
             });
             return;
           }
           else {
-            account.users.id(idUser).remove();
-            account.save((error, account) => {
-              if(error) {
-                sendJsonResponse(res, 400, {
-                  'Error': error.message
-                });
-                return;
-              }
-              else {
-                sendJsonResponse(res, 200, {
-                  'Message': 'User removed!'
-                });
-                return;
-              }
-            });            
-          }
+            const user = users.id(idUser);
+            if(!user) {
+              sendJsonResponse(res, 400, {
+                'Message': 'User not found!'
+              });
+              return;
+            }
+            else {
+              user.remove();
+              account.save((error, account) => {
+                if(error) {
+                  sendJsonResponse(res, 400, {
+                    'Error': error.message
+                  });
+                  return;
+                }
+                else {
+                  sendJsonResponse(res, 200, {
+                    'Message': 'User removed!'
+                  });
+                  return;
+                }
+              });            
+            }
+          }          
         }
       }, error => {
         sendJsonResponse(res, 400, {

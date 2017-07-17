@@ -10,10 +10,12 @@ const ResidenceSchema = new mongoose.Schema({
   },
   url: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   dependencies: [RoomSchema],
   boards: [BoardSchema]
 });
 
+mongoose.model('Residence', ResidenceSchema);
 export default ResidenceSchema;
