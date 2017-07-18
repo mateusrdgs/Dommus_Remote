@@ -11,22 +11,22 @@ router.get('/account/:idAccount', accountController.returnAccount);
 router.put('/account/:idAccount', accountController.updateAccount);
 router.delete('/account/:idAccount', accountController.deleteAccount);
 
-router.post('/account/:idAccount/users', userController.createUser);
-router.get('/account/:idAccount/users', userController.returnUsers);
-router.get('/account/:idAccount/users/:idUser', userController.returnUserById);
-router.put('/account/:idAccount/users/:idUser', userController.updateUserById);
-router.delete('/account/:idAccount/users/:idUser', userController.deleteUserById);
+router.post('/account/:idAccount/user', userController.createUser);
+router.get('/account/:idAccount/user', userController.returnUsers);
+router.get('/account/:idAccount/user/:idUser', userController.returnUserById);
+router.put('/account/:idAccount/user/:idUser', userController.updateUserById);
+router.delete('/account/:idAccount/user/:idUser', userController.deleteUserById);
 
-router.post('/account/:idAccount/residences', residenceController.createResidence);
-router.get('/account/:idAccount/residences', residenceController.returnResidences);
-router.get('/account/:idAccount/residences/:idResidence', residenceController.returnResidenceById);
-router.put('/account/:idAccount/residences/:idResidence', residenceController.updateResidenceById);
-router.delete('/account/:idAccount/residences/:idResidence', residenceController.deleteResidenceById);
+router.post('/account/:idAccount/residence', residenceController.createResidence);
+router.get('/account/:idAccount/residence', residenceController.returnResidences);
+router.get('/account/:idAccount/residence/:idResidence', residenceController.returnResidenceById);
+router.put('/account/:idAccount/residence/:idResidence', residenceController.updateResidenceById);
+router.delete('/account/:idAccount/residence/:idResidence', residenceController.deleteResidenceById);
 
-router.post('/account/:idAccount/residences/:idResidence/room', roomController.createRoom);
-router.get('/account/:idAccount/residences/:idResidence/room', roomController.returnRooms);
-router.get('/account/:idAccount/residences/:idResidence/room/:idRoom', roomController.returnRoomById);
-router.put('/account/:idAccount/residences/:idResidence/room/:idRoom', roomController.updateRoomById);
-router.delete('/account/:idAccount/residences/:idResidence/room/:idRoom', roomController.deleteRoomById);
+router.post('/account/:idAccount/residence/:idResidence/room', roomController.createRoom);
+router.get('/account/:idAccount/residence/:idResidence/room', roomController.returnRooms);
+router.get('/account/:idAccount/residence/:idResidence/room/:idRoom', roomController.returnRoomById);
+router.put('/account/:idAccount/residence/:idResidence/room/:idRoom', roomController.updateRoomById);
+router.delete('/account/:idAccount/residence/:idResidence/room/:idRoom', roomController.deleteRoomById);
 
 export default router;

@@ -5,7 +5,7 @@ const Account = mongoose.model('Account');
 const User = mongoose.model('User');
 
 function createUser(req, res) {
-  if(!req.params.id) {
+  if(!req.params.idAccount) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
