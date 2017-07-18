@@ -24,4 +24,6 @@ const BoardSchema = new mongoose.Schema({
   }
 });
 
+mongoose.model('Board', BoardSchema);
+
 export default BoardSchema;
