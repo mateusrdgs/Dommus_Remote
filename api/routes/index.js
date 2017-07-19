@@ -5,6 +5,7 @@ import * as userController from '../controllers/user';
 import * as residenceController from '../controllers/residence';
 import * as roomController from '../controllers/room';
 import * as boardController from '../controllers/board';
+import * as componentController from '../controllers/component';
 
 const router = express.Router();
 
@@ -36,6 +37,12 @@ router.get('/account/:idAccount/residence/:idResidence/boards', boardController.
 router.get('/account/:idAccount/residence/:idResidence/board/:idBoard', boardController.returnBoardById);
 router.put('/account/:idAccount/residence/:idResidence/board/:idBoard', boardController.updateBoardById);
 router.delete('/account/:idAccount/residence/:idResidence/board/:idBoard', boardController.deleteBoardById);
+
+router.post('/account/:idAccount/residence/:idResidence/room/:idRoom/component', componentController.createComponent);
+router.get('/account/:idAccount/residence/:idResidence/room/:idRoom/components', componentController.returnComponents);
+router.get('/account/:idAccount/residence/:idResidence/room/:idRoom/component/:idComponent', componentController.returnComponentById);
+router.put('/account/:idAccount/residence/:idResidence/room/:idRoom/component/:idComponent', componentController.updateComponentById);
+router.delete('/account/:idAccount/residence/:idResidence/room/:idRoom/component/:idComponent', componentController.deleteComponentById);
 
 router.all('*', (req, res) => sendJsonResponse(res, 404, { 'Message': 'Invalid route!' }));
 
