@@ -1,9 +1,6 @@
 import mongoose from 'mongoose';
-import { 
-  sendJsonResponse,
-  generateAnalogPins,
-  generateDigitalPins
-} from '../helper/helper';
+import { sendJsonResponse } from '../helper/helper';
+import { generateAnalogPins, generateDigitalPins } from '../helper/pinGenerator';
 
 const Account = mongoose.model('Account');
 const Board = mongoose.model('Board');
