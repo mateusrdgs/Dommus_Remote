@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 
 mongoose.Promise = global.Promise;
 const ComponentSchema = new mongoose.Schema({
-  board: {
+  idBoard: {
     type: mongoose.Schema.Types.ObjectId,
     required: true
-  },
+  },  
   description: {
     type: String,
     required: true
@@ -16,5 +16,7 @@ const ComponentSchema = new mongoose.Schema({
   },
   about: mongoose.Schema.Types.Mixed
 });
+
+mongoose.model('Component', ComponentSchema);
 
 export default ComponentSchema;

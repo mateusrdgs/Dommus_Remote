@@ -198,8 +198,8 @@ function returnBoardById(req, res) {
           });
           return;
         }
-        else {
-          const residence = residence.id(idResidence);
+        else {          
+          const residence = residences.id(idResidence);
           if(!residence) {
             sendJsonResponse(res, 404, {
               'Message': 'No residence found!'
