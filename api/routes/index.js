@@ -1,5 +1,8 @@
 import express from 'express';
 import { sendJsonResponse } from '../helper/helper';
+
+import * as accountMiddleware from '../middlewares/account';
+
 import * as accountController from '../controllers/account';
 import * as userController from '../controllers/user';
 import * as residenceController from '../controllers/residence';
@@ -9,10 +12,10 @@ import * as componentController from '../controllers/component';
 
 const router = express.Router();
 
-router.post('/account', accountController.createAccount);
-router.get('/account/:idAccount', accountController.returnAccount);
-router.put('/account/:idAccount', accountController.updateAccount);
-router.delete('/account/:idAccount', accountController.deleteAccount);
+router.post('/account',  accountMiddleware.createAccount, accountController.createAccount);
+router.get('/account/:idAccount', accountMiddleware.returnDeleteAccount, accountController.returnAccount);
+router.put('/account/:idAccount', accountMiddleware.updateAccount, accountController.updateAccount);
+router.delete('/account/:idAccount', accountMiddleware.returnDeleteAccount, accountController.deleteAccount);
 
 router.post('/account/:idAccount/user', userController.createUser);
 router.get('/account/:idAccount/users', userController.returnUsers);

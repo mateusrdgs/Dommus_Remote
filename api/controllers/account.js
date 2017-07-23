@@ -4,138 +4,106 @@ import { sendJsonResponse } from '../helper/helper';
 const Account = mongoose.model('Account');
 
 function createAccount(req, res) {
-  if(!req.body.email || !req.body.pin) {
-    sendJsonResponse(res, 400, { 
-      'Error':'Email and Pin required' 
-    });
-    return;
-  }
-  else {
-    const email = req.body.email;
-    const pin = req.body.pin;
-    Account.create({
-      email,
-      pin
-    }, (error, account) => {
-      if(error) {
-        sendJsonResponse(res, 400, { 
-          'Error': error 
-        });
-        return;
-      }
-      else {
-        sendJsonResponse(res, 200, { 
-          'Account': account 
-        });
-        return;
-      }
-    });
-  }
+  const { email, pin } = req.body;
+  Account.create({
+    email,
+    pin
+  }, (error, account) => {
+    if(error) {
+      sendJsonResponse(res, 500, { 
+        'Error': error.errmsg 
+      });
+      return;
+    }
+    else {
+      sendJsonResponse(res, 200, { 
+        'Account': account 
+      });
+      return;
+    }
+  });
 }
 
 function returnAccount(req, res) {
-  if(!req.params.idAccount) {
-    sendJsonResponse(res, 400, { 
-      'Message': 'Field Id required' 
-    });
-    return;
-  }
-  else {
-    const idAccount = req.params.idAccount;
-    Account
-    .findById(idAccount)
-    .then(account => {
-      if(account) {          
-        sendJsonResponse(res, 200, { 
-          'Account': account
-        });
-        return;
-      }
-      else if(!account) {          
-        sendJsonResponse(res, 404, { 
-          'Message': 'Account not found!' 
-        });
-        return;
-      }
-    }, error => {
-      console.log(error.message);
-      sendJsonResponse(res, 400, { 
-        'Error': error.message 
+  const { idAccount } = req.params;
+  Account
+  .findById(idAccount)
+  .then(account => {
+    if(!account) {      
+      sendJsonResponse(res, 404, { 
+        'Message': 'Account not found!'
       });
       return;
+    }
+    else if(!account) {
+      sendJsonResponse(res, 200, { 
+        'Account': account
+      });
+      return;
+    }
+  }, error => {
+    sendJsonResponse(res, 500, { 
+      'Error': error.errmsg
     });
-  }
+    return;
+  });
 }
 
 function updateAccount(req, res) {
-  if(!req.params.idAccount) {
-    sendJsonResponse(res, 400, {
-      'Message': 'Field Id required!'
-    });
-    return;
-  }
-  else {
-    const idAccount = req.params.idAccount;
-    Account
-    .findById(idAccount)
-    .then((account) => {
-      if(account) {
-        account.email = req.body.email || account.email;
-        account.pin = req.body.pin || account.pin;
-        account.save((error, account) => {
-          if(error) {
-            sendJsonResponse(res, 400, { 
-              'Error': error.message 
-            });
-          } 
-          else {
-            sendJsonResponse(res, 200, { 
-              'Account': account 
-            });
-          }
-        });
-      }
-      else {
-        sendJsonResponse(res, 404, { 
-          'Message': 'Account not found!'
-        });
-        return;
-      }
-    }, error => {
-      sendJsonResponse(res, 400, { 
-        'error': error.message 
+  const { idAccount } = req.params;
+  const { email, pin } = req.body;
+  Account
+  .findById(idAccount)
+  .then((account) => {
+    if(!account) {
+      sendJsonResponse(res, 404, {
+        'Message': 'Account not found!'
       });
+    }
+    else {
+      account.email = email || account.email;
+      account.pin = pin || account.pin;
+      account.save((error, account) => {
+        if(error) {
+          sendJsonResponse(res, 500, { 
+            'Error': error.errmsg 
+          });
+        } 
+        else {
+          sendJsonResponse(res, 200, { 
+            'Account': account 
+          });
+        }
+      });
+    }
+  }, error => {
+    sendJsonResponse(res, 400, { 
+      'Error': error.errmsg
     });
-  }
+  });
 }
 
 function deleteAccount(req, res) {
-  if(!req.params.idAccount) {
-    sendJsonResponse(res, 400, {
-      'Message': 'Field Id required!'
-    });
-  }
-  else {
-    const idAccount = req.params.idAccount;
-    Account
-    .findByIdAndRemove(idAccount)
-    .then(account => {
-      if(!account) {
-        sendJsonResponse(res, 404, {
-          'Error': 'Account not found!'
-        });
-      }
-      else {
-        sendJsonResponse(res, 200, { 
-          'Account': account
-        });
-      }        
-    }, error => {
-      sendJsonResponse(res, 400, {
-        'Error': error
+  const { idAccount } = req.params;
+  Account
+  .findByIdAndRemove(idAccount)
+  .then(account => {
+    if(!account) {
+      sendJsonResponse(res, 404, {
+        'Message': 'Account not found!'
       });
+    }
+    else {
+      sendJsonResponse(res, 200, { 
+        'Account': account
+      });
+    }        
+  }, error => {
+    sendJsonResponse(res, 500, {
+      'Error': error.errmsg
     });
-  }
+  });
+  
 }
 
 export {
