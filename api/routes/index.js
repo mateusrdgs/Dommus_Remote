@@ -4,6 +4,7 @@ import { sendJsonResponse } from '../helper/helper';
 import * as accountMiddleware from '../middlewares/account';
 import * as userMiddleware from '../middlewares/user';
 import * as residenceMiddleware from '../middlewares/residence';
+import * as roomMiddleware from '../middlewares/room';
 
 import * as accountController from '../controllers/account';
 import * as userController from '../controllers/user';
@@ -31,11 +32,11 @@ router.get('/account/:idAccount/residence/:idResidence', residenceMiddleware.ret
 router.put('/account/:idAccount/residence/:idResidence', residenceMiddleware.updateResidenceById, residenceController.updateResidenceById);
 router.delete('/account/:idAccount/residence/:idResidence', residenceMiddleware.returnAndDeleteResidenceById, residenceController.deleteResidenceById);
 
-router.post('/account/:idAccount/residence/:idResidence/room', roomController.createRoom);
-router.get('/account/:idAccount/residence/:idResidence/rooms', roomController.returnRooms);
-router.get('/account/:idAccount/residence/:idResidence/room/:idRoom', roomController.returnRoomById);
-router.put('/account/:idAccount/residence/:idResidence/room/:idRoom', roomController.updateRoomById);
-router.delete('/account/:idAccount/residence/:idResidence/room/:idRoom', roomController.deleteRoomById);
+router.post('/account/:idAccount/residence/:idResidence/room', roomMiddleware.createRoom, roomController.createRoom);
+router.get('/account/:idAccount/residence/:idResidence/rooms', roomMiddleware.returnRooms, roomController.returnRooms);
+router.get('/account/:idAccount/residence/:idResidence/room/:idRoom', roomMiddleware.returnAndDeleteRoomById, roomController.returnRoomById);
+router.put('/account/:idAccount/residence/:idResidence/room/:idRoom', roomMiddleware.updateRoomById, roomController.updateRoomById);
+router.delete('/account/:idAccount/residence/:idResidence/room/:idRoom', roomMiddleware.returnAndDeleteRoomById, roomController.deleteRoomById);
 
 router.post('/account/:idAccount/residence/:idResidence/board', boardController.createBoard);
 router.get('/account/:idAccount/residence/:idResidence/boards', boardController.returnBoards);
