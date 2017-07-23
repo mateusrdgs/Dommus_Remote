@@ -16,7 +16,7 @@ function createAccount(req, res) {
       return;
     }
     else {
-      sendJsonResponse(res, 200, { 
+      sendJsonResponse(res, 201, { 
         'Account': account 
       });
       return;
@@ -35,7 +35,7 @@ function returnAccount(req, res) {
       });
       return;
     }
-    else if(!account) {
+    else {
       sendJsonResponse(res, 200, { 
         'Account': account
       });

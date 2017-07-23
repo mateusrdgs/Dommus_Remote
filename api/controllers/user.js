@@ -30,9 +30,9 @@ function createUser(req, res) {
           return;
         }
         else {
-          const lastIndex = users.length - 1;
-          sendJsonResponse(res, 200, { 
-            'User': users[lastIndex]
+          const usersLength = users.length - 1;
+          sendJsonResponse(res, 201, { 
+            'User': users[usersLength]
           });
           return;
         }
@@ -162,7 +162,7 @@ function updateUserById(req, res) {
             }
             else {
               sendJsonResponse(res, 200, {
-                'User': account.users.id(idUser)
+                'User': user
               });
               return;
             }

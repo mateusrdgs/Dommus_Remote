@@ -3,6 +3,7 @@ import { sendJsonResponse } from '../helper/helper';
 
 import * as accountMiddleware from '../middlewares/account';
 import * as userMiddleware from '../middlewares/user';
+import * as residenceMiddleware from '../middlewares/residence';
 
 import * as accountController from '../controllers/account';
 import * as userController from '../controllers/user';
@@ -24,11 +25,11 @@ router.get('/account/:idAccount/user/:idUser', userMiddleware.returnAndDeleteUse
 router.put('/account/:idAccount/user/:idUser', userMiddleware.updateUserById, userController.updateUserById);
 router.delete('/account/:idAccount/user/:idUser', userMiddleware.returnAndDeleteUserById, userController.deleteUserById);
 
-router.post('/account/:idAccount/residence', residenceController.createResidence);
-router.get('/account/:idAccount/residences', residenceController.returnResidences);
-router.get('/account/:idAccount/residence/:idResidence', residenceController.returnResidenceById);
-router.put('/account/:idAccount/residence/:idResidence', residenceController.updateResidenceById);
-router.delete('/account/:idAccount/residence/:idResidence', residenceController.deleteResidenceById);
+router.post('/account/:idAccount/residence', residenceMiddleware.createResidence, residenceController.createResidence);
+router.get('/account/:idAccount/residences', residenceMiddleware.returnResidences, residenceController.returnResidences);
+router.get('/account/:idAccount/residence/:idResidence', residenceMiddleware.returnAndDeleteResidenceById, residenceController.returnResidenceById);
+router.put('/account/:idAccount/residence/:idResidence', residenceMiddleware.updateResidenceById, residenceController.updateResidenceById);
+router.delete('/account/:idAccount/residence/:idResidence', residenceMiddleware.returnAndDeleteResidenceById, residenceController.deleteResidenceById);
 
 router.post('/account/:idAccount/residence/:idResidence/room', roomController.createRoom);
 router.get('/account/:idAccount/residence/:idResidence/rooms', roomController.returnRooms);
