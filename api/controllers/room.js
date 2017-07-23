@@ -46,7 +46,7 @@ function createRoom(req, res) {
             }
             else {
               const roomsLength = rooms.length;
-              sendJsonResponse(res, 200, {
+              sendJsonResponse(res, 201, {
                 'Room': rooms[roomsLength - 1]
               });
               return;

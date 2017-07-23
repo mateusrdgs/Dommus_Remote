@@ -13,7 +13,7 @@ function createAccount(req, res, next) {
   }
 }
 
-function returnDeleteAccount(req, res, next) {
+function returnAndDeleteAccount(req, res, next) {
   const { idAccount } = req.params;
   if(!idAccount) {
     sendJsonResponse(res, 400, { 
@@ -48,6 +48,6 @@ function updateAccount(req, res, next) {
 
 export { 
   createAccount,
-  returnDeleteAccount,
+  returnAndDeleteAccount,
   updateAccount
 }

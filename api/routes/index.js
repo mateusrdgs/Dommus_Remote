@@ -5,6 +5,7 @@ import * as accountMiddleware from '../middlewares/account';
 import * as userMiddleware from '../middlewares/user';
 import * as residenceMiddleware from '../middlewares/residence';
 import * as roomMiddleware from '../middlewares/room';
+import * as boardMiddleware from '../middlewares/board';
 
 import * as accountController from '../controllers/account';
 import * as userController from '../controllers/user';
@@ -16,7 +17,7 @@ import * as componentController from '../controllers/component';
 const router = express.Router();
 
 router.post('/account',  accountMiddleware.createAccount, accountController.createAccount);
-router.get('/account/:idAccount', accountMiddleware.returnDeleteAccount, accountController.returnAccount);
+router.get('/account/:idAccount', accountMiddleware.returnAndDeleteAccount, accountController.returnAccount);
 router.put('/account/:idAccount', accountMiddleware.updateAccount, accountController.updateAccount);
 router.delete('/account/:idAccount', accountMiddleware.returnDeleteAccount, accountController.deleteAccount);
 
@@ -38,11 +39,11 @@ router.get('/account/:idAccount/residence/:idResidence/room/:idRoom', roomMiddle
 router.put('/account/:idAccount/residence/:idResidence/room/:idRoom', roomMiddleware.updateRoomById, roomController.updateRoomById);
 router.delete('/account/:idAccount/residence/:idResidence/room/:idRoom', roomMiddleware.returnAndDeleteRoomById, roomController.deleteRoomById);
 
-router.post('/account/:idAccount/residence/:idResidence/board', boardController.createBoard);
-router.get('/account/:idAccount/residence/:idResidence/boards', boardController.returnBoards);
-router.get('/account/:idAccount/residence/:idResidence/board/:idBoard', boardController.returnBoardById);
-router.put('/account/:idAccount/residence/:idResidence/board/:idBoard', boardController.updateBoardById);
-router.delete('/account/:idAccount/residence/:idResidence/board/:idBoard', boardController.deleteBoardById);
+router.post('/account/:idAccount/residence/:idResidence/board', boardMiddleware.createBoard, boardController.createBoard);
+router.get('/account/:idAccount/residence/:idResidence/boards', boardMiddleware.returnBoards, boardController.returnBoards);
+router.get('/account/:idAccount/residence/:idResidence/board/:idBoard', boardMiddleware.returnAndDeleteBoardById, boardController.returnBoardById);
+router.put('/account/:idAccount/residence/:idResidence/board/:idBoard', boardMiddleware.updateBoardById, boardController.updateBoardById);
+router.delete('/account/:idAccount/residence/:idResidence/board/:idBoard', boardMiddleware.returnAndDeleteBoardById, boardController.deleteBoardById);
 
 router.post('/account/:idAccount/residence/:idResidence/room/:idRoom/component', componentController.createComponent);
 router.get('/account/:idAccount/residence/:idResidence/room/:idRoom/components', componentController.returnComponents);
