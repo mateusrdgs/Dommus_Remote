@@ -43,7 +43,7 @@ function returnAccount(req, res) {
     }
   }, error => {
     sendJsonResponse(res, 500, { 
-      'Error': error.errmsg
+      'Error': error.message
     });
     return;
   });
@@ -78,7 +78,7 @@ function updateAccount(req, res) {
     }
   }, error => {
     sendJsonResponse(res, 400, { 
-      'Error': error.errmsg
+      'Error': error.message
     });
   });
 }
@@ -100,10 +100,9 @@ function deleteAccount(req, res) {
     }        
   }, error => {
     sendJsonResponse(res, 500, {
-      'Error': error.errmsg
+      'Error': error.message
     });
-  });
-  
+  });  
 }
 
 export {

@@ -2,6 +2,7 @@ import express from 'express';
 import { sendJsonResponse } from '../helper/helper';
 
 import * as accountMiddleware from '../middlewares/account';
+import * as userMiddleware from '../middlewares/user';
 
 import * as accountController from '../controllers/account';
 import * as userController from '../controllers/user';
@@ -17,11 +18,11 @@ router.get('/account/:idAccount', accountMiddleware.returnDeleteAccount, account
 router.put('/account/:idAccount', accountMiddleware.updateAccount, accountController.updateAccount);
 router.delete('/account/:idAccount', accountMiddleware.returnDeleteAccount, accountController.deleteAccount);
 
-router.post('/account/:idAccount/user', userController.createUser);
-router.get('/account/:idAccount/users', userController.returnUsers);
-router.get('/account/:idAccount/user/:idUser', userController.returnUserById);
-router.put('/account/:idAccount/user/:idUser', userController.updateUserById);
-router.delete('/account/:idAccount/user/:idUser', userController.deleteUserById);
+router.post('/account/:idAccount/user', userMiddleware.createUser, userController.createUser);
+router.get('/account/:idAccount/users', userMiddleware.returnUsers, userController.returnUsers);
+router.get('/account/:idAccount/user/:idUser', userMiddleware.returnAndDeleteUserById, userController.returnUserById);
+router.put('/account/:idAccount/user/:idUser', userMiddleware.updateUserById, userController.updateUserById);
+router.delete('/account/:idAccount/user/:idUser', userMiddleware.returnAndDeleteUserById, userController.deleteUserById);
 
 router.post('/account/:idAccount/residence', residenceController.createResidence);
 router.get('/account/:idAccount/residences', residenceController.returnResidences);
