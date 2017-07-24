@@ -6,6 +6,7 @@ import * as userMiddleware from '../middlewares/user';
 import * as residenceMiddleware from '../middlewares/residence';
 import * as roomMiddleware from '../middlewares/room';
 import * as boardMiddleware from '../middlewares/board';
+import * as componentMiddleware from '../middlewares/component';
 
 import * as accountController from '../controllers/account';
 import * as userController from '../controllers/user';
@@ -45,11 +46,11 @@ router.get('/account/:idAccount/residence/:idResidence/board/:idBoard', boardMid
 router.put('/account/:idAccount/residence/:idResidence/board/:idBoard', boardMiddleware.updateBoardById, boardController.updateBoardById);
 router.delete('/account/:idAccount/residence/:idResidence/board/:idBoard', boardMiddleware.returnAndDeleteBoardById, boardController.deleteBoardById);
 
-router.post('/account/:idAccount/residence/:idResidence/room/:idRoom/component', componentController.createComponent);
-router.get('/account/:idAccount/residence/:idResidence/room/:idRoom/components', componentController.returnComponents);
-router.get('/account/:idAccount/residence/:idResidence/room/:idRoom/component/:idComponent', componentController.returnComponentById);
-router.put('/account/:idAccount/residence/:idResidence/room/:idRoom/component/:idComponent', componentController.updateComponentById);
-router.delete('/account/:idAccount/residence/:idResidence/room/:idRoom/component/:idComponent', componentController.deleteComponentById);
+router.post('/account/:idAccount/residence/:idResidence/room/:idRoom/component', componentMiddleware.createComponent, componentController.createComponent);
+router.get('/account/:idAccount/residence/:idResidence/room/:idRoom/components', componentMiddleware.returnComponents, componentController.returnComponents);
+router.get('/account/:idAccount/residence/:idResidence/room/:idRoom/component/:idComponent', componentMiddleware.returnAndDeleteComponentById, componentController.returnComponentById);
+router.put('/account/:idAccount/residence/:idResidence/room/:idRoom/component/:idComponent', componentMiddleware.updateComponentById, componentController.updateComponentById);
+router.delete('/account/:idAccount/residence/:idResidence/room/:idRoom/component/:idComponent', componentMiddleware.returnAndDeleteComponentById, componentController.deleteComponentById);
 
 router.all('*', (req, res) => sendJsonResponse(res, 404, { 'Message': 'Invalid route!' }));
 

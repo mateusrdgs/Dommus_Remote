@@ -13,8 +13,7 @@ const ComponentSchema = new mongoose.Schema({
   type: {
     type: Number,
     required: true
-  },
-  about: mongoose.Schema.Types.Mixed
+  }  
 });
 
 mongoose.model('Component', ComponentSchema);
