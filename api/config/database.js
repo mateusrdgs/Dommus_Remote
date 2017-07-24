@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
-import './account';
-import './board';
-import './component';
-import './residence';
-import './room';
-import './user';
+import '../models/account';
+import '../models/board';
+import '../models/component';
+import '../models/residence';
+import '../models/room';
+import '../models/user';
 
 let databaseURI = 'mongodb://localhost:27017/remote';
 

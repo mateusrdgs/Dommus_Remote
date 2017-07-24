@@ -2,7 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
-import './api/models/database';
+import './api/config/database';
 import routes from './api/routes/index';
 
 const port = 3000;

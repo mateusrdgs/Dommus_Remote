@@ -1,6 +1,6 @@
 {
   "name": "remote",
-  "version": "0.4.0",
+  "version": "0.6.0",
   "description": "Dommus is an Arduino based home automation system prototype using MEAN Stack. More informations about this module will be provided later.",
   "main": "index.js",
   "repository": "git@github.com:mateusrdgs/Remote.git",

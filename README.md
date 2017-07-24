@@ -1,12 +1,32 @@
-# Dommus - Remote Module
+# Dommus - Remote module
 
 > Dommus is an Arduino based home automation system prototype using MEAN Stack. More informations about this module will be provided later.
 
 ## Run the project locally
 
-Soon
+1. Install [Node.js](https://nodejs.org/en/)
+2. Install [MongoDB](https://www.mongodb.com/)
+3. Install nodemon globally
 
-## Module Stack
+```sh
+npm install -g nodemon
+```
+
+4. Clone the project and install the dependencies
+
+```sh
+git clone https://github.com/mateusrdgs/dommus-remote.git
+cd Remote
+npm install
+```
+
+5. Run the project
+
+```sh
+npm start
+```
+
+## Project stack
 
 - Platform: [Node.js](https://nodejs.org/en/)
 - Web framework: [Express](http://expressjs.com/)
@@ -16,19 +36,30 @@ Soon
 
     .
     ├── api/
+    |   ├── config/
+    |   |   └── database.js
     |   ├── controllers/
     |   |   └── account.js
+    |   |   └── board.js
     |   |   └── component.js
     |   |   └── residence.js
     |   |   └── room.js
     |   |   └── user.js
     |   ├── helper/
+    |   |   └── componentGenerator.js
     |   |   └── helper.js
+    |   |   └── pinGenerator.js
+    |   ├── middlewares/
+    |   |   └── account.js
+    |   |   └── board.js
+    |   |   └── component.js
+    |   |   └── residence.js
+    |   |   └── room.js
+    |   |   └── user.js
     |   ├── models/
     |   |   └── account.js
     |   |   └── board.js
     |   |   └── component.js
-    |   |   └── database.js
     |   |   └── residence.js
     |   |   └── room.js
     |   |   └── user.js
@@ -37,6 +68,7 @@ Soon
     ├── .babelrc
     ├── .eslintrc
     ├── .gitignore
+    ├── CONTRIBUTING.md
     ├── index.js
     ├── LICENSE
     ├── nodemon.json
