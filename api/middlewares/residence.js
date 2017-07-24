@@ -1,9 +1,12 @@
+import mongoose from 'mongoose';
 import { sendJsonResponse } from '../helper/helper';
+
+const ObjectId = mongoose.Types.ObjectId;
 
 function createResidence(req, res, next) {
   const { idAccount } = req.params;
   const { description, url } = req.body;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
@@ -22,7 +25,7 @@ function createResidence(req, res, next) {
 
 function returnResidences(req, res, next) {
   const { idAccount } = req.params;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
@@ -35,13 +38,13 @@ function returnResidences(req, res, next) {
 
 function returnAndDeleteResidenceById(req, res, next) {
   const { idAccount, idResidence } = req.params;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!idResidence) {
+  else if(!idResidence || !ObjectId.isValid(idResidence)) {
     sendJsonResponse(res, 400, {
       'Message': 'Residence Id is required!'
     });
@@ -55,13 +58,13 @@ function returnAndDeleteResidenceById(req, res, next) {
 function updateResidenceById(req, res, next) {
   const { idAccount, idResidence } = req.params;
   const { description, url } = req.body;
-  if(!idAccount) {
+  if(!idAccount ||! !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!idResidence) {
+  else if(!idResidence || !ObjectId.isValid(idResidence)) {
     sendJsonResponse(res, 400, {
       'Message': 'Residence Id is required!'
     });

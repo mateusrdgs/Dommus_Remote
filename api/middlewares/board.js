@@ -1,15 +1,18 @@
+import mongoose from 'mongoose';
 import { sendJsonResponse } from '../helper/helper';
+
+const ObjectId = mongoose.Types.ObjectId;
 
 function createBoard(req, res, next) {
   const { idAccount, idResidence } = req.params;
   const { description, model, port } = req.body;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!idResidence) {
+  else if(!idResidence || !ObjectId.isValid(idResidence)) {
     sendJsonResponse(res, 400, {
       'Message': 'Residence Id is required!'
     });
@@ -47,19 +50,19 @@ function returnBoards(req, res, next) {
 
 function returnAndDeleteBoardById(req, res, next) {
   const { idAccount, idResidence, idBoard } = req.params;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!idResidence) {
+  else if(!idResidence || !ObjectId.isValid(idResidence)) {
     sendJsonResponse(res, 400, {
       'Message': 'Residence Id is required!'
     });
     return;
   }
-  else if(!idBoard) {
+  else if(!idBoard || !ObjectId.isValid(idBoard)) {
     sendJsonResponse(res, 400, {
       'Message': 'Board Id is required!'
     });
@@ -73,19 +76,19 @@ function returnAndDeleteBoardById(req, res, next) {
 function updateBoardById(req, res, next) {
   const { idAccount, idResidence, idBoard } = req.params;
   const { description, model, port, analogPins, digitalPins } = req.body;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!idResidence) {
+  else if(!idResidence || !ObjectId.isValid(idResidence)) {
     sendJsonResponse(res, 400, {
       'Message': 'Residence Id is required!'
     });
     return;
   }
-  else if(!idBoard) {
+  else if(!idBoard || !ObjectId.isValid(idBoard)) {
     sendJsonResponse(res, 400, {
       'Message': 'Board Id is required!'
     });

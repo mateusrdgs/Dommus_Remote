@@ -1,28 +1,31 @@
+import mongoose from 'mongoose';
 import { sendJsonResponse } from '../helper/helper';
+
+const ObjectId = mongoose.Types.ObjectId;
 
 function createComponent(req, res, next) {
   const { idAccount, idResidence, idRoom } = req.params;
   const { idBoard, description  } = req.body;
   let { type } = req.body;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!idResidence) {
+  else if(!idResidence || !ObjectId.isValid(idResidence)) {
     sendJsonResponse(res, 400, {
       'Message': 'Residence Id is required!'
     });
     return;
   }
-  else if(!idRoom) {
+  else if(!idRoom || !ObjectId.isValid(idRoom)) {
     sendJsonResponse(res, 400, {
       'Message': 'Room Id is required!'
     });
     return;
   }
-  else if(!idBoard || !description || !type) {
+  else if((!idBoard || !ObjectId.isValid(idBoard)) || !description || !type) {
     sendJsonResponse(res, 400, {
       'Message': 'Board Id, component description and type are required!'
     });
@@ -81,19 +84,19 @@ function createComponent(req, res, next) {
 
 function returnComponents(req, res, next) {
   const { idAccount, idResidence, idRoom } = req.params;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!idResidence) {
+  else if(!idResidence || !ObjectId.isValid(idResidence)) {
     sendJsonResponse(res, 400, {
       'Message': 'Residence Id is required!'
     });
     return;
   }
-  else if(!idRoom) {
+  else if(!idRoom || !ObjectId.isValid(idRoom)) {
     sendJsonResponse(res, 400, {
       'Message': 'Room Id is required!'
     });
@@ -106,25 +109,25 @@ function returnComponents(req, res, next) {
 
 function returnAndDeleteComponentById(req, res, next) {
   const { idAccount, idResidence, idRoom, idComponent } = req.params;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!idResidence) {
+  else if(!idResidence || !ObjectId.isValid(idResidence)) {
     sendJsonResponse(res, 400, {
       'Message': 'Residence Id is required!'
     });
     return;
   }
-  else if(!idRoom) {
+  else if(!idRoom || !ObjectId.isValid(idRoom)) {
     sendJsonResponse(res, 400, {
       'Message': 'Room Id is required!'
     });
     return;
   }
-  else if(!idComponent) {
+  else if(!idComponent || !ObjectId.isValid(idComponent)) {
     sendJsonResponse(res, 400, {
       'Message': 'Component Id is required!'
     });
@@ -138,31 +141,31 @@ function updateComponentById(req, res, next) {
   const { idAccount, idResidence, idRoom, idComponent } = req.params;
   const { idBoard, description  } = req.body;
   let { type } = req.body;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!idResidence) {
+  else if(!idResidence || !ObjectId.isValid(idResidence)) {
     sendJsonResponse(res, 400, {
       'Message': 'Residence Id is required!'
     });
     return;
   }
-  else if(!idRoom) {
+  else if(!idRoom || !ObjectId.isValid(idRoom)) {
     sendJsonResponse(res, 400, {
       'Message': 'Room Id is required!'
     });
     return;
   }
-  else if(!idComponent) {
+  else if(!idComponent || !Object.isValid(idComponent)) {
     sendJsonResponse(res, 400, {
       'Messsage': 'Component Id is required!'
     });
     return;
   }
-  else if(!idBoard || !description || !type) {
+  else if((!idBoard || !ObjectId.isValid(idBoard)) || !description || !type) {
     sendJsonResponse(res, 400, {
       'Message': 'Board Id, component description and type are required!'
     });
@@ -173,7 +176,7 @@ function updateComponentById(req, res, next) {
     switch(type) {
       case 1: {
         const { digitalPin } = req.body;
-        if(!digitalPin) {
+        if(!parseInt(digitalPin)) {
           sendJsonResponse(res, 400, {
             'Message': 'Field digitalPin is required!'
           });
@@ -186,7 +189,7 @@ function updateComponentById(req, res, next) {
       break;
       case 2: {
         const { analogPin, frequency } = req.body;
-        if(!analogPin || !frequency) {
+        if(!parseInt(analogPin) || !parseInt(frequency)) {
           sendJsonResponse(res, 400, {
             'Message': 'Fields analogPin and frequency are required!'
           });
@@ -199,7 +202,7 @@ function updateComponentById(req, res, next) {
       break;
       case 3: {
         const { digitalPin, rotation, minRange, maxRange } = req.body;
-        if(!digitalPin || !rotation || !minRange || !maxRange) {
+        if(!parseInt(digitalPin) || !parseInt(rotation) || !parseInt(minRange) || !parseInt(maxRange)) {
           sendJsonResponse(res, 400, {
             'Message': 'Fields digitalPin, rotation, minRange and maxRange are required!'
           });

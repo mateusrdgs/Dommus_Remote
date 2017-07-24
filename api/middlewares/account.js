@@ -1,4 +1,7 @@
+import mongoose from 'mongoose';
 import { sendJsonResponse } from '../helper/helper';
+
+const ObjectId = mongoose.Types.ObjectId;
 
 function createAccount(req, res, next) {
   const { email, pin } = req.body;
@@ -15,7 +18,7 @@ function createAccount(req, res, next) {
 
 function returnAndDeleteAccount(req, res, next) {
   const { idAccount } = req.params;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, { 
       'Message': 'Account Id is required!' 
     });

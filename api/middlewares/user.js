@@ -1,9 +1,12 @@
+import mongoose from 'mongoose'
 import { sendJsonResponse } from '../helper/helper';
+
+const ObjectId = mongoose.Types.ObjectId;
 
 function createUser(req, res, next) {
   const { idAccount } = req.params;
   const { name, type } = req.body;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
@@ -22,7 +25,7 @@ function createUser(req, res, next) {
 
 function returnUsers(req, res, next) {
   const { idAccount } = req.params;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
@@ -35,13 +38,13 @@ function returnUsers(req, res, next) {
 
 function returnAndDeleteUserById(req, res, next) {
   const { idAccount, idUser } = req.params;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!idUser) {
+  else if(!idUser || !ObjectId.isValid(idUser)) {
     sendJsonResponse(res, 400, {
       'Message': 'User Id is required!'
     });
@@ -55,13 +58,13 @@ function returnAndDeleteUserById(req, res, next) {
 function updateUserById(req, res, next) {
   const { idAccount, idUser } = req.params;
   const { name, type } = req.body;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!idUser) {
+  else if(!idUser || !ObjectId.isValid(idUser)) {
     sendJsonResponse(res, 400, {
       'Message': 'User Id is required!'
     });

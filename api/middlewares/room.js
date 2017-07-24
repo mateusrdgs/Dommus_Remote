@@ -1,15 +1,18 @@
+import mongoose from 'mongoose';
 import { sendJsonResponse } from '../helper/helper';
+
+const ObjectId = mongoose.Types.ObjectId;
 
 function createRoom(req, res, next) {
   const { idAccount, idResidence } = req.params;
   const { description } = req.body;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!idResidence) {
+  else if(!idResidence || !ObjectId.isValid(idResidence)) {
     sendJsonResponse(res, 400, {
       'Message': 'Residence Id is required!'
     });
@@ -28,13 +31,13 @@ function createRoom(req, res, next) {
 
 function returnRooms(req, res, next) {
   const { idAccount, idResidence } = req.params;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!idResidence) {
+  else if(!idResidence || ObjectId.isValid(idResidence)) {
     sendJsonResponse(res, 400, {
       'Message': 'Residence Id is required!'
     });
@@ -47,19 +50,19 @@ function returnRooms(req, res, next) {
 
 function returnAndDeleteRoomById(req, res, next) {
   const { idAccount, idResidence, idRoom } = req.params;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!idResidence) {
+  else if(!idResidence || !ObjectId.isValid(idResidence)) {
     sendJsonResponse(res, 400, {
       'Message': 'Residence Id is required!'
     });
     return;
   }
-  else if(!idRoom) {
+  else if(!idRoom || !ObjectId.isValid(idRoom)) {
     sendJsonResponse(res, 400, {
       'Message': 'Room Id is required!'
     });
@@ -73,19 +76,19 @@ function returnAndDeleteRoomById(req, res, next) {
 function updateRoomById(req, res, next) {
   const { idAccount, idResidence, idRoom } = req.params;
   const { description } = req.body;
-  if(!idAccount) {
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!idResidence) {
+  else if(!idResidence || !ObjectId.isValid(idResidence)) {
     sendJsonResponse(res, 400, {
       'Message': 'Residence Id is required!'
     });
     return;
   }
-  else if(!idRoom) {
+  else if(!idRoom || !ObjectId.isValid(idRoom)) {
     sendJsonResponse(res, 400, {
       'Message': 'Room Id is required!'
     });
