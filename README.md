@@ -16,7 +16,7 @@ npm install -g nodemon
 
 ```sh
 git clone https://github.com/mateusrdgs/dommus-remote.git
-cd Remote
+cd dommus-remote
 npm install
 ```
 
