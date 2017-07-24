@@ -14,7 +14,7 @@ const ComponentSchema = new mongoose.Schema({
     type: Number,
     required: true
   }  
-});
+}, { strict: false });
 
 mongoose.model('Component', ComponentSchema);
 

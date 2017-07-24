@@ -2,7 +2,8 @@ import { sendJsonResponse } from '../helper/helper';
 
 function createComponent(req, res, next) {
   const { idAccount, idResidence, idRoom } = req.params;
-  const { idBoard, description, type } = req.body;
+  const { idBoard, description  } = req.body;
+  let { type } = req.body;
   if(!idAccount) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
@@ -26,38 +27,48 @@ function createComponent(req, res, next) {
       'Message': 'Board Id, component description and type are required!'
     });
   }
-  else if(type) {
+  else {
+    type = parseInt(type);
     switch(type) {
       case 1: {
         const { digitalPin } = req.body;
-        if(!digitalPin) {
+        if(!parseInt(digitalPin)) {
           sendJsonResponse(res, 400, {
             'Message': 'Field digitalPin is required!'
           });
           return;
         }
+        else {
+          next();
+        }
       }
-        break;
+      break;
       case 2: {
         const { analogPin, frequency } = req.body;
-        if(!analogPin || !frequency) {
+        if(!parseInt(analogPin) || !parseInt(frequency)) {
           sendJsonResponse(res, 400, {
             'Message': 'Fields analogPin and frequency are required!'
           });
           return;
         }
+        else {
+          next();
+        }
       }
-        break;
+      break;
       case 3: {
         const { digitalPin, rotation, minRange, maxRange } = req.body;
-        if(!digitalPin || !rotation || !minRange || !maxRange) {
+        if(!parseInt(digitalPin) || !parseInt(rotation) || !parseInt(minRange) || !parseInt(maxRange)) {
           sendJsonResponse(res, 400, {
             'Message': 'Fields digitalPin, rotation, minRange and maxRange are required!'
           });
           return;
         }
+        else {
+          next();
+        }
       }
-        break;
+      break;
       default: {
         sendJsonResponse(res, 400, {
           'Message': 'Invalid component type'
@@ -65,9 +76,6 @@ function createComponent(req, res, next) {
         return;
       }
     }
-  }
-  else {
-    next();
   }
 }
 
@@ -128,7 +136,8 @@ function returnAndDeleteComponentById(req, res, next) {
 
 function updateComponentById(req, res, next) {
   const { idAccount, idResidence, idRoom, idComponent } = req.params;
-  const { idBoard, description, type } = req.body;
+  const { idBoard, description  } = req.body;
+  let { type } = req.body;
   if(!idAccount) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
@@ -159,7 +168,8 @@ function updateComponentById(req, res, next) {
     });
     return;
   }
-  else if(type) {
+  else {
+    type = parseInt(type);
     switch(type) {
       case 1: {
         const { digitalPin } = req.body;
@@ -169,8 +179,11 @@ function updateComponentById(req, res, next) {
           });
           return;
         }
+        else {
+          next();
+        }
       }
-        break;
+      break;
       case 2: {
         const { analogPin, frequency } = req.body;
         if(!analogPin || !frequency) {
@@ -179,8 +192,11 @@ function updateComponentById(req, res, next) {
           });
           return;
         }
+        else {
+          next();
+        }
       }
-        break;
+      break;
       case 3: {
         const { digitalPin, rotation, minRange, maxRange } = req.body;
         if(!digitalPin || !rotation || !minRange || !maxRange) {
@@ -189,8 +205,11 @@ function updateComponentById(req, res, next) {
           });
           return;
         }
+        else {
+          next();
+        }
       }
-        break;
+      break;
       default: {
         sendJsonResponse(res, 400, {
           'Message': 'Invalid component type'
@@ -198,9 +217,6 @@ function updateComponentById(req, res, next) {
         return;
       }
     }
-  }
-  else {
-    next();
   }
 }
 

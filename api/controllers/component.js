@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
-import { sendJsonResponse, parseInt } from '../helper/helper';
+import { sendJsonResponse } from '../helper/helper';
 
 const Account = mongoose.model('Account');
 const Component = mongoose.model('Component');
 
 function createComponent(req, res) {
-  const { idAccount, idResidence, idRoom } = req.params.idAccount;
-  const { idBoard, description, type } = req.body;  
+  const { idAccount, idResidence, idRoom } = req.params;
+  const { idBoard, description } = req.body;
+  let { type } = req.body;
   Account
   .findById(idAccount)
   .then(account => {
@@ -50,9 +51,11 @@ function createComponent(req, res) {
             }
             else {
               const components = room.components;
+              type = parseInt(type);
               switch(type) {
                 case 1: {
-                  const { digitalPin } = req.body;
+                  let { digitalPin } = req.body;
+                  digitalPin = parseInt(digitalPin);
                   components.push(new Component({
                     idBoard,
                     description,
@@ -62,7 +65,9 @@ function createComponent(req, res) {
                 }
                 break;
                 case 2: {
-                  const { analogPin, frequency } = req.body;
+                  let { analogPin, frequency } = req.body;
+                  analogPin = parseInt(analogPin);
+                  frequency = parseInt(frequency);
                   components.push(new Component({
                     idBoard,
                     description,
@@ -73,7 +78,11 @@ function createComponent(req, res) {
                 }
                 break;
                 case 3: {
-                  const { digitalPin, rotation, minRange, maxRange } = req.body;
+                  let { digitalPin, rotation, minRange, maxRange } = req.body;
+                  digitalPin = parseInt(digitalPin);
+                  rotation = parseInt(rotation);
+                  minRange = parseInt(minRange);
+                  maxRange = parseInt(maxRange);
                   components.push(new Component({
                     idBoard,
                     description,
@@ -269,6 +278,8 @@ function returnComponentById(req, res) {
 
 function updateComponentById(req, res) {
   const { idAccount, idResidence, idRoom, idComponent } = req.params;
+  const { idBoard, description } = req.body;
+  let { type } = req.body;
   Account
   .findById(idAccount)
   .then(account => {
@@ -327,28 +338,28 @@ function updateComponentById(req, res) {
                   return;
                 }
                 else {
-                  const { idBoard, description, type } = req.body;
+                  type = parseInt(type);
                   component.idBoard = idBoard || component.idBoard;
                   component.description = description || component.description;
                   component.type = type || component.type;
                   switch(type) {
                     case 1: {
                       const { digitalPin } = req.body;
-                      component.digitalPin = digitalPin || component.digitalPin;
+                      component.digitalPin = parseInt(digitalPin) || component.digitalPin;
                     }
                     break;
                     case 2: {
                       const { analogPin, frequency } = req.body;
-                      component.analogPin = analogPin || component.analogPin;
-                      component.frequency = frequency || component.frequency;
+                      component.analogPin = parseInt(analogPin) || component.analogPin;
+                      component.frequency = parseInt(frequency) || component.frequency;
                     }
                     break;
                     case 3: {
                       const { digitalPin, rotation, minRange, maxRange } = req.body.digitalPin;
-                      component.digitalPin = digitalPin || component.digitalPin;
-                      component.rotation = rotation || component.rotation;
-                      component.minRange = minRange || component.minRange;
-                      component.maxRange = maxRange || component.maxRange;
+                      component.digitalPin = parseInt(digitalPin) || component.digitalPin;
+                      component.rotation = parseInt(rotation) || component.rotation;
+                      component.minRange = parseInt(minRange) || component.minRange;
+                      component.maxRange = parseInt(maxRange) || component.maxRange;
                     }
                     break;
                     default: {
@@ -423,7 +434,7 @@ function deleteComponentById(req, res) {
             return;
           }
           else {
-            const room = room.id(idRoom);
+            const room = rooms.id(idRoom);
             if(!room) {
               sendJsonResponse(res, 404, {
                 'Message': 'No room found!'
