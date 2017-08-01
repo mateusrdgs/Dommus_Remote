@@ -1,8 +1,7 @@
-import mongoose from 'mongoose';
-import { sendJsonResponse } from '../helper/helper';
-
-const Account = mongoose.model('Account');
-const User = mongoose.model('User');
+const mongoose = require('mongoose'),
+      sendJsonResponse = require('../helper/helper').sendJsonResponse,
+      Account = mongoose.model('Account'),
+      User = mongoose.model('User');
 
 function createUser(req, res) {
   const { idAccount } = req.params;
@@ -231,7 +230,7 @@ function deleteUserById(req, res) {
   });
 }
 
-export {
+module.exports = {
   createUser,
   returnUsers,
   returnUserById,

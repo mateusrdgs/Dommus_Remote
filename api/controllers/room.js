@@ -1,8 +1,7 @@
-import mongoose from 'mongoose';
-import { sendJsonResponse } from '../helper/helper';
-
-const Account = mongoose.model('Account');
-const Room = mongoose.model('Room');
+const mongoose = require('mongoose'),
+      sendJsonResponse = require('../helper/helper').sendJsonResponse,
+      Account = mongoose.model('Account'),
+      Room = mongoose.model('Room');
 
 function createRoom(req, res) {
   const { idAccount, idResidence } = req.params;
@@ -310,7 +309,7 @@ function deleteRoomById(req, res) {
   });
 }
 
-export {
+module.exports = {
   createRoom,
   returnRooms,
   returnRoomById,

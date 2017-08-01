@@ -1,21 +1,18 @@
-import express from 'express';
-import { sendJsonResponse } from '../helper/helper';
-
-import * as accountMiddleware from '../middlewares/account';
-import * as userMiddleware from '../middlewares/user';
-import * as residenceMiddleware from '../middlewares/residence';
-import * as roomMiddleware from '../middlewares/room';
-import * as boardMiddleware from '../middlewares/board';
-import * as componentMiddleware from '../middlewares/component';
-
-import * as accountController from '../controllers/account';
-import * as userController from '../controllers/user';
-import * as residenceController from '../controllers/residence';
-import * as roomController from '../controllers/room';
-import * as boardController from '../controllers/board';
-import * as componentController from '../controllers/component';
-
-const router = express.Router();
+const express = require('express'),
+      sendJsonResponse = require('../helper/helper'),
+      accountMiddleware = require('../middlewares/account'),
+      userMiddleware = require('../middlewares/user'),
+      residenceMiddleware = require('../middlewares/residence'),
+      roomMiddleware = require('../middlewares/room'),
+      boardMiddleware = require('../middlewares/board'),
+      componentMiddleware = require('../middlewares/component'),
+      accountController = require('../controllers/account'),
+      userController = require('../controllers/user'),
+      residenceController = require('../controllers/residence'),
+      roomController = require('../controllers/room'),
+      boardController = require('../controllers/board'),
+      componentController = require('../controllers/component'),
+      router = express.Router();
 
 router.post('/account',  accountMiddleware.createAccount, accountController.createAccount);
 router.get('/account/:idAccount', accountMiddleware.returnAndDeleteAccount, accountController.returnAccount);
@@ -54,4 +51,4 @@ router.delete('/account/:idAccount/residence/:idResidence/room/:idRoom/component
 
 router.all('*', (req, res) => sendJsonResponse(res, 404, { 'Message': 'Invalid route!' }));
 
-export default router;
+module.exports = router;

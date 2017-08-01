@@ -1,12 +1,14 @@
-import mongoose from 'mongoose';
-import '../models/account';
-import '../models/board';
-import '../models/component';
-import '../models/residence';
-import '../models/room';
-import '../models/user';
+require('../models/account');
+require('../models/board');
+require('../models/component');
+require('../models/residence');
+require('../models/room');
+require('../models/user');
 
-let databaseURI = 'mongodb://localhost:27017/remote';
+const mongoose = require('mongoose'),
+      remoteDatabaseURI = 'mongodb://dommus-user:1112131415@ds111123.mlab.com:11123/dommus-remote',
+      localDatabaseURI = 'mongodb://localhost:27017/remote',
+      databaseURI = process.env.NODE_ENV === 'production' ? remoteDatabaseURI : localDatabaseURI;
 
 mongoose.connect(databaseURI, {
   useMongoClient: true

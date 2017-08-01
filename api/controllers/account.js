@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
-import { sendJsonResponse } from '../helper/helper';
-
-const Account = mongoose.model('Account');
+const mongoose = require('mongoose'),
+      sendJsonResponse = require('../helper/helper').sendJsonResponse,
+      Account = mongoose.model('Account');
 
 function createAccount(req, res) {
   const { email, pin } = req.body;
@@ -105,7 +104,7 @@ function deleteAccount(req, res) {
   });  
 }
 
-export {
+module.exports = {
   createAccount,
   returnAccount,
   updateAccount,

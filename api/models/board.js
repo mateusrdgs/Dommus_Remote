@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 const BoardSchema = new mongoose.Schema({
@@ -25,5 +25,4 @@ const BoardSchema = new mongoose.Schema({
 });
 
 mongoose.model('Board', BoardSchema);
-
-export default BoardSchema;
+module.exports = BoardSchema;

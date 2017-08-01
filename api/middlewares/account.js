@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
-import { sendJsonResponse } from '../helper/helper';
-
-const ObjectId = mongoose.Types.ObjectId;
+const mongoose = require('mongoose'),
+      sendJsonResponse = require('../helper/helper').sendJsonResponse, 
+      ObjectId = mongoose.Types.ObjectId;
 
 function createAccount(req, res, next) {
   const { email, pin } = req.body;
@@ -32,7 +31,7 @@ function returnAndDeleteAccount(req, res, next) {
 function updateAccount(req, res, next) {
   const { idAccount } = req.params;
   const { email, pin } = req.body;
-  if(!idAccount) {
+  if(!idAccount || !Object.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
@@ -49,7 +48,7 @@ function updateAccount(req, res, next) {
   }
 }
 
-export { 
+module.exports = { 
   createAccount,
   returnAndDeleteAccount,
   updateAccount

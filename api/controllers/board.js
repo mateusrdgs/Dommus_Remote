@@ -1,9 +1,9 @@
-import mongoose from 'mongoose';
-import { sendJsonResponse } from '../helper/helper';
-import { generateAnalogPins, generateDigitalPins } from '../helper/pinGenerator';
-
-const Account = mongoose.model('Account');
-const Board = mongoose.model('Board');
+const mongoose = require('mongoose'),
+      sendJsonResponse = require('../helper/helper').sendJsonResponse,
+      generateAnalogPins = require('../helper/generators').generateAnalogPins,
+      generateDigitalPins = require('../helper/generators').generateDigitalPins,
+      Account = mongoose.model('Account'),
+      Board = mongoose.model('Board');
 
 function createBoard(req, res) {
   const { idAccount, idResidence } = req.params;
@@ -326,7 +326,7 @@ function deleteBoardById(req, res) {
   });
 }
 
-export {
+module.exports = {
   createBoard,
   returnBoards,
   returnBoardById,

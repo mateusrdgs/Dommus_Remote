@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 const UserSchema = new mongoose.Schema({
@@ -16,5 +16,4 @@ const UserSchema = new mongoose.Schema({
 });
 
 mongoose.model('User', UserSchema);
-
-export default UserSchema;
+module.exports = UserSchema;

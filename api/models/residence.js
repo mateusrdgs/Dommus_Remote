@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import RoomSchema from './room';
-import BoardSchema from './board';
+const mongoose = require('mongoose'),
+      RoomSchema = require('./room'),
+      BoardSchema = require('./board');
 
 mongoose.Promise = global.Promise;
 const ResidenceSchema = new mongoose.Schema({
@@ -18,4 +18,4 @@ const ResidenceSchema = new mongoose.Schema({
 });
 
 mongoose.model('Residence', ResidenceSchema);
-export default ResidenceSchema;
+module.exports = ResidenceSchema;

@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import UserSchema from './user';
-import ResidenceSchema from './residence';
+const mongoose = require('mongoose'),
+      UserSchema = require('./user'),
+      ResidenceSchema = require('./residence');
 
 mongoose.Promise = global.Promise;
 const AccountSchema = new mongoose.Schema({
@@ -20,3 +20,4 @@ const AccountSchema = new mongoose.Schema({
 });
 
 mongoose.model('Account', AccountSchema);
+module.exports = AccountSchema;

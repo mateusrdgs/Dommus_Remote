@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
-import { sendJsonResponse } from '../helper/helper';
-
-const ObjectId = mongoose.Types.ObjectId;
+const mongoose = require('mongoose'),
+      sendJsonResponse = require('../helper/helper').sendJsonResponse,
+      ObjectId = mongoose.Types.ObjectId;
 
 function createBoard(req, res, next) {
   const { idAccount, idResidence } = req.params;
@@ -105,7 +104,7 @@ function updateBoardById(req, res, next) {
   }
 }
 
-export {
+module.exports = {
   createBoard,
   returnBoards,
   returnAndDeleteBoardById,

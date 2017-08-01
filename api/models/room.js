@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import ComponentSchema from './component';
+const mongoose = require('mongoose'),
+      ComponentSchema = require('./component');
 
 mongoose.Promise = global.Promise;
 const RoomSchema = new mongoose.Schema({
@@ -11,5 +11,4 @@ const RoomSchema = new mongoose.Schema({
 });
 
 mongoose.model('Room', RoomSchema);
-
-export default RoomSchema;
+module.exports = RoomSchema;

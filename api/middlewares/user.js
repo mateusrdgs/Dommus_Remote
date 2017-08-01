@@ -1,7 +1,6 @@
-import mongoose from 'mongoose'
-import { sendJsonResponse } from '../helper/helper';
-
-const ObjectId = mongoose.Types.ObjectId;
+const mongoose  = require('mongoose'),
+      sendJsonResponse = require('../helper/helper'),
+      ObjectId = mongoose.Types.ObjectId;
 
 function createUser(req, res, next) {
   const { idAccount } = req.params;
@@ -80,7 +79,7 @@ function updateUserById(req, res, next) {
   }
 }
 
-export {
+module.exports = {
   createUser,
   returnUsers,
   returnAndDeleteUserById,

@@ -1,12 +1,12 @@
-import express from 'express';
-import helmet from 'helmet';
-import bodyParser from 'body-parser';
-import morgan from 'morgan';
-import './api/config/database';
-import routes from './api/routes/index';
+require('./api/config/database');
 
-const port = 3000;
-const app = express();
+const express = require('express'),
+      helmet = require('helmet'),
+      bodyParser  = require('body-parser'),
+      morgan = require ('morgan'),
+      routes = require('./api/routes/index'),
+      port = 3000,
+      app = express();
 
 app.use(helmet());
 app.use(morgan('dev'));
@@ -15,4 +15,4 @@ app.use(bodyParser.urlencoded({ extended:false }));
 
 app.use('/api', routes);
 
-app.listen(port, () => console.log(`Express listening on port ${port}`));
+app.listen(port || process.env.PORT, () => console.log(`Express listening on port ${port}`));

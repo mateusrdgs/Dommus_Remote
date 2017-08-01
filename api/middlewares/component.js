@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
-import { sendJsonResponse } from '../helper/helper';
-
-const ObjectId = mongoose.Types.ObjectId;
+const mongoose = require('mongoose'),
+      sendJsonResponse = require('../helper/helper').sendJsonResponse,
+      ObjectId = mongoose.Types.ObjectId;
 
 function createComponent(req, res, next) {
   const { idAccount, idResidence, idRoom } = req.params;
@@ -223,7 +222,7 @@ function updateComponentById(req, res, next) {
   }
 }
 
-export {
+module.exports = {
   createComponent,
   returnComponents,
   returnAndDeleteComponentById,
