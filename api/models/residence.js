@@ -10,8 +10,7 @@ const ResidenceSchema = new mongoose.Schema({
   },
   url: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   rooms: [RoomSchema],
   boards: [BoardSchema]

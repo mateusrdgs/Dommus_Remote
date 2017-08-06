@@ -8,12 +8,13 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
     "express": "^4.15.3",
     "helmet": "^3.6.1",
     "mongoose": "^4.11.1",
     "morgan": "^1.8.2"
   },
-  "scripts": {    
+  "scripts": {
     "start": "nodemon index.js"
   },
   "devDependencies": {

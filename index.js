@@ -3,11 +3,13 @@ require('./api/config/database');
 const express = require('express'),
       helmet = require('helmet'),
       bodyParser  = require('body-parser'),
-      morgan = require ('morgan'),
+      morgan = require ('morgan')
+      cors = require('cors'),
       routes = require('./api/routes/index'),
       port = 3000,
       app = express();
 
+app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(bodyParser.json());

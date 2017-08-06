@@ -1,5 +1,5 @@
 const mongoose  = require('mongoose'),
-      sendJsonResponse = require('../helper/helper'),
+      sendJsonResponse = require('../helper/helper').sendJsonResponse,
       ObjectId = mongoose.Types.ObjectId;
 
 function createUser(req, res, next) {
