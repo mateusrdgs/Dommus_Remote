@@ -39,9 +39,9 @@ router.delete('/account/:idAccount/residences/:idResidence/rooms/:idRoom', roomM
 
 router.get('/account/:idAccount/residences/:idResidence/boards', boardMiddleware.returnBoards, boardController.returnBoards);
 router.post('/account/:idAccount/residences/:idResidence/boards/new', boardMiddleware.createBoard, boardController.createBoard);
-router.get('/account/:idAccount/residences/:idResidence/board/:idBoard', boardMiddleware.returnAndDeleteBoardById, boardController.returnBoardById);
-router.put('/account/:idAccount/residences/:idResidence/board/:idBoard', boardMiddleware.updateBoardById, boardController.updateBoardById);
-router.delete('/account/:idAccount/residences/:idResidence/board/:idBoard', boardMiddleware.returnAndDeleteBoardById, boardController.deleteBoardById);
+router.get('/account/:idAccount/residences/:idResidence/boards/:idBoard', boardMiddleware.returnAndDeleteBoardById, boardController.returnBoardById);
+router.put('/account/:idAccount/residences/:idResidence/boards/:idBoard', boardMiddleware.updateBoardById, boardController.updateBoardById);
+router.delete('/account/:idAccount/residences/:idResidence/boards/:idBoard', boardMiddleware.returnAndDeleteBoardById, boardController.deleteBoardById);
 
 router.get('/account/:idAccount/residences/:idResidence/rooms/:idRoom/components', componentMiddleware.returnComponents, componentController.returnComponents);
 router.post('/account/:idAccount/residences/:idResidence/rooms/:idRoom/components/new', componentMiddleware.createComponent, componentController.createComponent);
