@@ -1,26 +1,46 @@
 const mongoose = require('mongoose'),
+      passport = require('passport'),
       sendJsonResponse = require('../helper/helper').sendJsonResponse,
       Account = mongoose.model('Account');
 
 function createAccount(req, res) {
-  const { email, pin } = req.body;
-  Account.create({
-    email,
-    pin
-  }, (error, account) => {
+  const { email, password, pin } = req.body,
+          account = new Account();
+  account.email = email;
+  account.setPassword(password);
+  account.pin = pin;
+  account.save((error, account) => {
     if(error) {
-      sendJsonResponse(res, 500, { 
-        'Error': error.errmsg 
-      });
+      sendJsonResponse(res, 404, error);
       return;
     }
     else {
-      sendJsonResponse(res, 201, { 
-        'Account': account 
+      const token = account.generateJwt();
+      sendJsonResponse(res, 201, {
+        'token': token
       });
       return;
     }
   });
+}
+
+function loginAccount(req, res) {
+  const { email, password } = req.body;
+  passport.authenticate('local', (error, user, info) => {
+    if(error) {
+      sendJsonResponse(res, 500, error);
+      return;
+    }
+    else if(user) {
+      const token = user.generateJwt();
+      sendJsonResponse(res, 200, {
+        'token': token
+      });
+    }
+    else {
+      sendJsonResponse(res, 401, info);
+    }
+  })
 }
 
 function returnAccount(req, res) {
@@ -106,6 +126,7 @@ function deleteAccount(req, res) {
 
 module.exports = {
   createAccount,
+  loginAccount,
   returnAccount,
   updateAccount,
   deleteAccount

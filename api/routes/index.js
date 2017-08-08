@@ -1,4 +1,5 @@
 const express = require('express'),
+      jwt = require('express-jwt'),
       sendJsonResponse = require('../helper/helper').sendJsonResponse,
       accountMiddleware = require('../middlewares/account'),
       userMiddleware = require('../middlewares/user'),
@@ -12,14 +13,19 @@ const express = require('express'),
       roomController = require('../controllers/room'),
       boardController = require('../controllers/board'),
       componentController = require('../controllers/component'),
-      router = express.Router();
+      router = express.Router(),
+      auth = jwt({
+        secret: process.env.SECRET_JWT,
+        userProperty: 'payload'
+      });
 
-router.post('/account', accountMiddleware.createAccount, accountController.createAccount);
+router.post('/account/new', accountMiddleware.createAccount, accountController.createAccount);
+router.post('/account/login', accountMiddleware.createAccount, accountController.loginAccount);
 router.get('/account/:idAccount', accountMiddleware.returnAndDeleteAccount, accountController.returnAccount);
 router.put('/account/:idAccount', accountMiddleware.updateAccount, accountController.updateAccount);
 router.delete('/account/:idAccount', accountMiddleware.returnAndDeleteAccount, accountController.deleteAccount);
 
-router.get('/account/:idAccount/users', userMiddleware.returnUsers, userController.returnUsers);
+router.get('/account/:idAccount/users', [auth, userMiddleware.returnUsers], userController.returnUsers);
 router.post('/account/:idAccount/users/new', userMiddleware.createUser, userController.createUser);
 router.get('/account/:idAccount/users/:idUser', userMiddleware.returnAndDeleteUserById, userController.returnUserById);
 router.put('/account/:idAccount/users/:idUser', userMiddleware.updateUserById, userController.updateUserById);
