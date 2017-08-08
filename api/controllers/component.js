@@ -1,5 +1,6 @@
 const mongoose = require('mongoose'),
       sendJsonResponse = require('../helper/helper').sendJsonResponse,
+      updateBoardById = require('./board').updateBoardById,
       Account = mongoose.model('Account'),
       Component = mongoose.model('Component');
 
@@ -61,6 +62,7 @@ function createComponent(req, res) {
                     type,
                     digitalPin
                   }));
+                  updateBoardFreePins(residence, idBoard, type, digitalPin);
                 }
                 break;
                 case 2: {
@@ -74,6 +76,7 @@ function createComponent(req, res) {
                     analogPin,
                     frequency
                   }));
+                  updateBoardFreePins(residence, idBoard, type, analogPin);
                 }
                 break;
                 case 3: {
@@ -90,6 +93,7 @@ function createComponent(req, res) {
                     rotation,
                     minRange, maxRange
                   }));
+                  updateBoardFreePins(residence, idBoard, type, digitalPin);
                 }
                 break;
                 default: {
@@ -345,12 +349,14 @@ function updateComponentById(req, res) {
                     case 1: {
                       const { digitalPin } = req.body;
                       component.digitalPin = parseInt(digitalPin) || component.digitalPin;
+                      updateBoardFreePins(residence, idBoard, type, digitalPin);
                     }
                     break;
                     case 2: {
                       const { analogPin, frequency } = req.body;
                       component.analogPin = parseInt(analogPin) || component.analogPin;
                       component.frequency = parseInt(frequency) || component.frequency;
+                      updateBoardFreePins(residence, idBoard, type, analogPin)
                     }
                     break;
                     case 3: {
@@ -359,6 +365,7 @@ function updateComponentById(req, res) {
                       component.rotation = parseInt(rotation) || component.rotation;
                       component.minRange = parseInt(minRange) || component.minRange;
                       component.maxRange = parseInt(maxRange) || component.maxRange;
+                      updateBoardFreePins(residence, idBoard, type, digitalPin)
                     }
                     break;
                     default: {
@@ -485,6 +492,32 @@ function deleteComponentById(req, res) {
     });
     return;
   });
+}
+
+function updateBoardFreePins(residence, idBoard, componentType, pinValue) {
+  const boards = residence.boards;
+  if(!boards) {
+    return;
+  }
+  else {
+    const board = boards.id(idBoard);
+    if(!board) {
+      return;
+    }
+    else {
+      console.log('here!');
+      if(componentType === 2) {
+        let analogPins = board.analogPins;
+        const index = analogPins.indexOf(pinValue);
+        analogPins = analogPins.splice(index, 1);
+      }
+      else {
+        let digitalPins = board.digitalPins;
+        const index = digitalPins.indexOf(pinValue);
+        digitalPins = digitalPins.splice(index, 1);
+      }
+    }
+  }
 }
 
 module.exports = {
