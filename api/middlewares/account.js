@@ -3,10 +3,11 @@ const mongoose = require('mongoose'),
       ObjectId = mongoose.Types.ObjectId;
 
 function createAccount(req, res, next) {
-  const { email, pin } = req.body;
-  if(!email || !pin)  {
+  const { email, password, pin } = req.body;
+  console.log(req.body);
+  if(!email || !password || !pin)  {
     sendJsonResponse(res, 400, {
-      'Message': 'Fields email and pin are required!'
+      'Message': 'Fields email, password and pin are required!'
     });
     return;
   }

@@ -1,27 +1,27 @@
 const passport = require('passport'),
       localStrategy = require('passport-local').Strategy,
       mongoose = require('mongoose'),
-      User = mongoose.model('User');
+      Account = mongoose.model('Account');
 
 passport.use(new localStrategy({
   usernameField: 'email'
 }, function(username, password, done) {
-  User.findOne({ email: username }, (error, user) => {
+  Account.findOne({ email: username }, function(error, account) {
     if(error) {
       return done(error);
     }
-    else if(!user) {
+    else if(!account) {
       return done(null, false, {
         'message': 'Invalid username'
       });
     }
-    else if(!User.validPassword(password)) {
+    else if(!account.validatePassword(password)) {
       return done(null, false, {
         'message': 'Invalid password'
       });
     }
     else {
-      return done(null, user);
+      return done(null, account);
     }
   });
 }));
