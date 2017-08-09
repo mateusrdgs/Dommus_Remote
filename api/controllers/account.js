@@ -25,8 +25,7 @@ function createAccount(req, res) {
 }
 
 function loginAccount(req, res) {
-  const { email, password } = req.body;
-  passport.authenticate('local', (error, user, info) => {
+  passport.authenticate('local', function(error, user, info) {
     if(error) {
       sendJsonResponse(res, 500, error);
       return;
@@ -40,7 +39,7 @@ function loginAccount(req, res) {
     else {
       sendJsonResponse(res, 401, info);
     }
-  })
+  })(req, res);
 }
 
 function returnAccount(req, res) {

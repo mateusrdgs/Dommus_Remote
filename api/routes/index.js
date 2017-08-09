@@ -20,7 +20,7 @@ const express = require('express'),
       });
 
 router.post('/account/new', accountMiddleware.createAccount, accountController.createAccount);
-router.post('/account/login', accountMiddleware.createAccount, accountController.loginAccount);
+router.post('/account/login', accountController.loginAccount);
 router.get('/account/:idAccount', accountMiddleware.returnAndDeleteAccount, accountController.returnAccount);
 router.put('/account/:idAccount', accountMiddleware.updateAccount, accountController.updateAccount);
 router.delete('/account/:idAccount', accountMiddleware.returnAndDeleteAccount, accountController.deleteAccount);

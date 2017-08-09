@@ -5,9 +5,7 @@ const passport = require('passport'),
 
 passport.use(new localStrategy({
   usernameField: 'email'
-}, verifyUser));
-
-function verifyUser(username, password, done) {
+}, function(username, password, done) {
   User.findOne({ email: username }, (error, user) => {
     if(error) {
       return done(error);
@@ -26,4 +24,4 @@ function verifyUser(username, password, done) {
       return done(null, user);
     }
   });
-}
+}));

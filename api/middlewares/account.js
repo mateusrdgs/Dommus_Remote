@@ -15,6 +15,19 @@ function createAccount(req, res, next) {
   }
 }
 
+function loginAccount(req, res, next) {
+  const { email, password } = req.body;
+  if(!email || !password) {
+    sendJsonResponse(res, 400, {
+      'Message': 'Fields email and password are required!'
+    });
+    return;
+  }
+  else {
+    next();
+  }
+}
+
 function returnAndDeleteAccount(req, res, next) {
   const { idAccount } = req.params;
   if(!idAccount || !ObjectId.isValid(idAccount)) {
@@ -50,6 +63,7 @@ function updateAccount(req, res, next) {
 
 module.exports = { 
   createAccount,
+  loginAccount,
   returnAndDeleteAccount,
   updateAccount
 }
