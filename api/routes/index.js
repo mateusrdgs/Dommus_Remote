@@ -26,34 +26,34 @@ router.put('/account/:idAccount', accountMiddleware.updateAccount, accountContro
 router.delete('/account/:idAccount', accountMiddleware.returnAndDeleteAccount, accountController.deleteAccount);
 
 router.get('/account/:idAccount/users', [auth, userMiddleware.returnUsers], userController.returnUsers);
-router.post('/account/:idAccount/users/new', userMiddleware.createUser, userController.createUser);
-router.get('/account/:idAccount/users/:idUser', userMiddleware.returnAndDeleteUserById, userController.returnUserById);
-router.put('/account/:idAccount/users/:idUser', userMiddleware.updateUserById, userController.updateUserById);
-router.delete('/account/:idAccount/users/:idUser', userMiddleware.returnAndDeleteUserById, userController.deleteUserById);
+router.post('/account/:idAccount/users/new', [auth, userMiddleware.createUser], userController.createUser);
+router.get('/account/:idAccount/users/:idUser', [auth, userMiddleware.returnAndDeleteUserById], userController.returnUserById);
+router.put('/account/:idAccount/users/:idUser', [auth, userMiddleware.updateUserById], userController.updateUserById);
+router.delete('/account/:idAccount/users/:idUser', [auth, userMiddleware.returnAndDeleteUserById], userController.deleteUserById);
 
-router.get('/account/:idAccount/residences', residenceMiddleware.returnResidences, residenceController.returnResidences);
-router.post('/account/:idAccount/residences/new', residenceMiddleware.createResidence, residenceController.createResidence);
-router.get('/account/:idAccount/residences/:idResidence', residenceMiddleware.returnAndDeleteResidenceById, residenceController.returnResidenceById);
-router.put('/account/:idAccount/residences/:idResidence', residenceMiddleware.updateResidenceById, residenceController.updateResidenceById);
-router.delete('/account/:idAccount/residences/:idResidence', residenceMiddleware.returnAndDeleteResidenceById, residenceController.deleteResidenceById);
+router.get('/account/:idAccount/residences', [auth, residenceMiddleware.returnResidences], residenceController.returnResidences);
+router.post('/account/:idAccount/residences/new', [auth, residenceMiddleware.createResidence], residenceController.createResidence);
+router.get('/account/:idAccount/residences/:idResidence', [auth, residenceMiddleware.returnAndDeleteResidenceById], residenceController.returnResidenceById);
+router.put('/account/:idAccount/residences/:idResidence', [auth, residenceMiddleware.updateResidenceById], residenceController.updateResidenceById);
+router.delete('/account/:idAccount/residences/:idResidence', [auth, residenceMiddleware.returnAndDeleteResidenceById], residenceController.deleteResidenceById);
 
-router.get('/account/:idAccount/residences/:idResidence/rooms', roomMiddleware.returnRooms, roomController.returnRooms);
-router.post('/account/:idAccount/residences/:idResidence/rooms/new', roomMiddleware.createRoom, roomController.createRoom);
+router.get('/account/:idAccount/residences/:idResidence/rooms', [auth, roomMiddleware.returnRooms], roomController.returnRooms);
+router.post('/account/:idAccount/residences/:idResidence/rooms/new', [auth, roomMiddleware.createRoom], roomController.createRoom);
 router.get('/account/:idAccount/residences/:idResidence/rooms/:idRoom', roomMiddleware.returnAndDeleteRoomById, roomController.returnRoomById);
 router.put('/account/:idAccount/residences/:idResidence/rooms/:idRoom', roomMiddleware.updateRoomById, roomController.updateRoomById);
 router.delete('/account/:idAccount/residences/:idResidence/rooms/:idRoom', roomMiddleware.returnAndDeleteRoomById, roomController.deleteRoomById);
 
-router.get('/account/:idAccount/residences/:idResidence/boards', boardMiddleware.returnBoards, boardController.returnBoards);
-router.post('/account/:idAccount/residences/:idResidence/boards/new', boardMiddleware.createBoard, boardController.createBoard);
-router.get('/account/:idAccount/residences/:idResidence/boards/:idBoard', boardMiddleware.returnAndDeleteBoardById, boardController.returnBoardById);
-router.put('/account/:idAccount/residences/:idResidence/boards/:idBoard', boardMiddleware.updateBoardById, boardController.updateBoardById);
-router.delete('/account/:idAccount/residences/:idResidence/boards/:idBoard', boardMiddleware.returnAndDeleteBoardById, boardController.deleteBoardById);
+router.get('/account/:idAccount/residences/:idResidence/boards', [auth, boardMiddleware.returnBoards], boardController.returnBoards);
+router.post('/account/:idAccount/residences/:idResidence/boards/new', [auth, boardMiddleware.createBoard], boardController.createBoard);
+router.get('/account/:idAccount/residences/:idResidence/boards/:idBoard', [auth, boardMiddleware.returnAndDeleteBoardById], boardController.returnBoardById);
+router.put('/account/:idAccount/residences/:idResidence/boards/:idBoard', [auth, boardMiddleware.updateBoardById], boardController.updateBoardById);
+router.delete('/account/:idAccount/residences/:idResidence/boards/:idBoard', [auth, boardMiddleware.returnAndDeleteBoardById], boardController.deleteBoardById);
 
-router.get('/account/:idAccount/residences/:idResidence/rooms/:idRoom/components', componentMiddleware.returnComponents, componentController.returnComponents);
-router.post('/account/:idAccount/residences/:idResidence/rooms/:idRoom/components/new', componentMiddleware.createComponent, componentController.createComponent);
-router.get('/account/:idAccount/residences/:idResidence/rooms/:idRoom/components/:idComponent', componentMiddleware.returnAndDeleteComponentById, componentController.returnComponentById);
-router.put('/account/:idAccount/residences/:idResidence/rooms/:idRoom/components/:idComponent', componentMiddleware.updateComponentById, componentController.updateComponentById);
-router.delete('/account/:idAccount/residences/:idResidence/rooms/:idRoom/component/:idComponent', componentMiddleware.returnAndDeleteComponentById, componentController.deleteComponentById);
+router.get('/account/:idAccount/residences/:idResidence/rooms/:idRoom/components', [auth, componentMiddleware.returnComponents], componentController.returnComponents);
+router.post('/account/:idAccount/residences/:idResidence/rooms/:idRoom/components/new', [auth, componentMiddleware.createComponent], componentController.createComponent);
+router.get('/account/:idAccount/residences/:idResidence/rooms/:idRoom/components/:idComponent', [auth, componentMiddleware.returnAndDeleteComponentById], componentController.returnComponentById);
+router.put('/account/:idAccount/residences/:idResidence/rooms/:idRoom/components/:idComponent', [auth, componentMiddleware.updateComponentById], componentController.updateComponentById);
+router.delete('/account/:idAccount/residences/:idResidence/rooms/:idRoom/component/:idComponent', [auth, componentMiddleware.returnAndDeleteComponentById], componentController.deleteComponentById);
 
 router.all('*', (req, res) => sendJsonResponse(res, 404, { 'Message': 'Invalid route!' }));
 

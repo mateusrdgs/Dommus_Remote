@@ -36,7 +36,7 @@ function returnRooms(req, res, next) {
     });
     return;
   }
-  else if(!idResidence || ObjectId.isValid(idResidence)) {
+  else if(!idResidence || !ObjectId.isValid(idResidence)) {
     sendJsonResponse(res, 400, {
       'Message': 'Residence Id is required!'
     });
