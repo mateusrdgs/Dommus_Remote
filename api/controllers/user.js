@@ -1,11 +1,13 @@
 const mongoose = require('mongoose'),
       sendJsonResponse = require('../helper/helper').sendJsonResponse,
-      Account = mongoose.model('Account'),
-      User = mongoose.model('User');
+      Account  = mongoose.model('Account'),
+      AdminUser = require('../models/user').AdminUser,
+      CommonUser = require('../models/user').CommonUser;
 
 function createUser(req, res) {
   const { idAccount } = req.params;
-  const { name, type } = req.body;
+  let { name, type, pin } = req.body;
+  type = Boolean(type);
   Account
   .findById(idAccount)
   .then(account => {
@@ -17,10 +19,20 @@ function createUser(req, res) {
     }
     else {
       const users = account.users;
-      users.push(new User({
-        name,
-        type
-      }));          
+      if(type) {
+        const userAdmin = new AdminUser();
+        userAdmin.name = name;
+        userAdmin.setPin(pin.toString());
+        console.log(userAdmin);
+        users.push(userAdmin);
+        const length = users.length - 1;        
+        console.log(users[length]);
+      }
+      else {
+        const user = new CommonUser();
+        user.name = name;
+        users.push(user);
+      }
       account.save((error, account) => {
         if(error) {
           sendJsonResponse(res, 500, {
