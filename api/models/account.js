@@ -1,7 +1,9 @@
 const mongoose = require('mongoose'),
       crypto = require('crypto'),
       jwt = require('jsonwebtoken'),
-      UserSchema = require('./user'),
+      UserSchema = require('./user').UserSchema,
+      CommonUserSchema = require('./user').CommonUserSchema,
+      AdminUserSchema = require('./user').AdminUserSchema,
       ResidenceSchema = require('./residence');
 
 mongoose.Promise = global.Promise;
@@ -42,4 +44,12 @@ AccountSchema.methods.generateJwt = function() {
 }
 
 mongoose.model('Account', AccountSchema);
-module.exports = AccountSchema;
+
+const AdminUser = AccountSchema.path('users').discriminator(true, AdminUserSchema);
+const CommonUser = AccountSchema.path('users').discriminator(false, CommonUserSchema);
+
+module.exports = {
+  AccountSchema,
+  AdminUser,
+  CommonUser
+};

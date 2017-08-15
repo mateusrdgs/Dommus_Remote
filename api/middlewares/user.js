@@ -4,16 +4,16 @@ const mongoose  = require('mongoose'),
 
 function createUser(req, res, next) {
   const { idAccount } = req.params;
-  const { name, type } = req.body;
+  const { name, isAdmin } = req.body;
   if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!name || !type) {
+  else if(!name || !isAdmin) {
     sendJsonResponse(res, 400, {
-      'Message': 'Fields name and type are required!'
+      'Message': 'Fields name and isAdmin are required!'
     });
     return;
   }
@@ -56,7 +56,7 @@ function returnAndDeleteUserById(req, res, next) {
 
 function updateUserById(req, res, next) {
   const { idAccount, idUser } = req.params;
-  const { name, type } = req.body;
+  const { name, isAdmin } = req.body;
   if(!idAccount || !ObjectId(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
@@ -69,9 +69,9 @@ function updateUserById(req, res, next) {
     });
     return;
   }
-  else if(!name || !type) {
+  else if(!name || !isAdmin) {
     sendJsonResponse(res, 400, {
-      'Message': 'Fields name and type are required!'
+      'Message': 'Fields name and isAdmin are required!'
     });
   }
   else {

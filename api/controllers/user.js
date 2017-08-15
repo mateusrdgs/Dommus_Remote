@@ -1,13 +1,13 @@
 const mongoose = require('mongoose'),
       sendJsonResponse = require('../helper/helper').sendJsonResponse,
       Account  = mongoose.model('Account'),
-      AdminUser = require('../models/user').AdminUser,
-      CommonUser = require('../models/user').CommonUser;
+      AdminUser = require('../models/account').AdminUser,
+      CommonUser = require('../models/account').CommonUser;
 
 function createUser(req, res) {
   const { idAccount } = req.params;
-  let { name, type, pin } = req.body;
-  type = Boolean(type);
+  let { name, isAdmin, pin } = req.body;
+  isAdmin = isAdmin === 'true' ? true: false;
   Account
   .findById(idAccount)
   .then(account => {
@@ -19,24 +19,25 @@ function createUser(req, res) {
     }
     else {
       const users = account.users;
-      if(type) {
-        const userAdmin = new AdminUser();
-        userAdmin.name = name;
+      if(isAdmin) {
+        const userAdmin = new AdminUser({
+          name,
+          isAdmin
+        });
         userAdmin.setPin(pin.toString());
-        console.log(userAdmin);
         users.push(userAdmin);
-        const length = users.length - 1;        
-        console.log(users[length]);
       }
       else {
-        const user = new CommonUser();
-        user.name = name;
+        const user = new CommonUser({
+          name,
+          isAdmin
+        });
         users.push(user);
       }
       account.save((error, account) => {
         if(error) {
           sendJsonResponse(res, 500, {
-            'Error': error.errmsg
+            'Error': error
           });
           return;
         }
@@ -51,7 +52,7 @@ function createUser(req, res) {
     }
   }, error => {
     sendJsonResponse(res, 500, {
-      'Error': error.message
+      'Error': error
     });
     return;
   });

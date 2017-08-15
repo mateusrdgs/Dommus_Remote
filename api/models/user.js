@@ -1,39 +1,33 @@
 const mongoose = require('mongoose'),
       crypto =  require('crypto'),
       jwt = require('jsonwebtoken'),
-      options = { discriminatorKey: 'type', _id: false };
+      rootOptions = { discriminatorKey: 'isAdmin' },
+      childOptions = { discriminatorKey: 'isAdmin', _id: false };
 
 mongoose.Promise = global.Promise;
-const UserSchema = new mongoose.Schema({  
-  type: {
+const UserSchema = new mongoose.Schema({
+  name: {
     type: String,
+    required: true
+  },
+  isAdmin: {
+    type: Boolean,
     required: true,
-    enum: ['common', 'admin']
+    enum: [true, false]
   },
   avatar: {
     type: Buffer
   }
-}, options);
-
-const User = mongoose.model('User', UserSchema);
+}, rootOptions);
 
 const CommonUserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  }
-}, options);
-
-const CommonUser = User.discriminator('common', CommonUserSchema);
+  
+}, childOptions);
 
 const AdminUserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
   hashPin: String,
   saltPin: String
-}, options);
+}, childOptions);
 
 AdminUserSchema.methods.setPin = function(pin) {
   this.saltPin = crypto.randomBytes(16).toString('hex');
@@ -55,9 +49,8 @@ AdminUserSchema.methods.generateJwt = function() {
   }, process.env.SECRET_JWT);
 }
 
-const AdminUser = User.discriminator('admin', AdminUserSchema);
-
 module.exports = {
-  CommonUser,
-  AdminUser
+  UserSchema,
+  AdminUserSchema,
+  CommonUserSchema
 };
