@@ -15,10 +15,6 @@ const AccountSchema = new mongoose.Schema({
   },
   hash: String,
   salt: String,
-  pin: {
-    type: Number,
-    required: true
-  },
   residences: [ResidenceSchema],
   users: [UserSchema]
 });

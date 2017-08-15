@@ -4,7 +4,6 @@ const mongoose = require('mongoose'),
 
 function createAccount(req, res, next) {
   const { email, password, pin } = req.body;
-  console.log(req.body);
   if(!email || !password || !pin)  {
     sendJsonResponse(res, 400, {
       'Message': 'Fields email, password and pin are required!'

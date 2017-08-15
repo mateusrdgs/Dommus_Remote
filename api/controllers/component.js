@@ -505,7 +505,6 @@ function updateBoardFreePins(residence, idBoard, componentType, pinValue) {
       return;
     }
     else {
-      console.log('here!');
       if(componentType === 2) {
         let analogPins = board.analogPins;
         const index = analogPins.indexOf(pinValue);

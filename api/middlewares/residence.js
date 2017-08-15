@@ -58,7 +58,6 @@ function updateResidenceById(req, res, next) {
   const { idAccount, idResidence } = req.params;
   const { description, url } = req.body;
   if(!idAccount || !ObjectId.isValid(idAccount)) {
-    console.log(idAccount);
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });

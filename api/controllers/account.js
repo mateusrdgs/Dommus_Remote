@@ -1,14 +1,17 @@
 const mongoose = require('mongoose'),
       passport = require('passport'),
       sendJsonResponse = require('../helper/helper').sendJsonResponse,
-      Account = mongoose.model('Account');
+      Account = mongoose.model('Account'),
+      AdminUser = require('../models/account').AdminUser;
 
 function createAccount(req, res) {
-  const { email, password, pin } = req.body,
-          account = new Account();
-  account.email = email;
+  const { name, email, password, pin } = req.body,
+  account = new Account({
+    email,
+    pin
+  });
+  createStarterUser(account, name, pin);
   account.setPassword(password);
-  account.pin = pin;
   account.save((error, account) => {
     if(error) {
       sendJsonResponse(res, 404, error);
@@ -129,4 +132,15 @@ module.exports = {
   returnAccount,
   updateAccount,
   deleteAccount
+}
+
+function createStarterUser(account, name, pin) {
+  const isAdmin = true,
+        users = account.users,
+        newUser = new AdminUser({
+                    name,
+                    isAdmin
+                  });
+  newUser.setPin(pin);
+  users.push(newUser);
 }

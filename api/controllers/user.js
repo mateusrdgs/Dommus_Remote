@@ -96,14 +96,12 @@ function returnUserById(req, res) {
   .findById(idAccount)
   .then(account => {
     if(!account) {
-      console.log(idAccount, idUser);
       sendJsonResponse(res, 404, {
         'Message': 'Account not found!'
       });
       return;
     }
     else {
-      console.log(idAccount, idUser);
       const users = account.users;
       if(!users) {
         sendJsonResponse(res, 404, {
