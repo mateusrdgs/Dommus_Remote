@@ -7,11 +7,11 @@ const mongoose = require('mongoose'),
 function createAccount(req, res) {
   const { name, email, password, pin } = req.body,
   account = new Account({
-    email,
-    pin
+    email
   });
   createStarterUser(account, name, pin);
   account.setPassword(password);
+  account.setPin(pin);
   account.save((error, account) => {
     if(error) {
       sendJsonResponse(res, 404, error);

@@ -13,20 +13,32 @@ const AccountSchema = new mongoose.Schema({
     unique: true,
     required: true
   },
-  hash: String,
-  salt: String,
+  passwordSalt: String,
+  passwordHash: String,
+  pinSalt: String,
+  pinHash: String,
   residences: [ResidenceSchema],
   users: [UserSchema]
 });
 
 AccountSchema.methods.setPassword = function(password) {
-  this.salt = crypto.randomBytes(16).toString('hex');
-  this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
+  this.passwordSalt = crypto.randomBytes(16).toString('hex');
+  this.passwordHash = crypto.pbkdf2Sync(password, this.passwordSalt, 1000, 64, 'sha512').toString('hex');
 }
 
 AccountSchema.methods.validatePassword = function(password) {
-  const hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
-  return this.hash === hash;
+  const hash = crypto.pbkdf2Sync(password, this.passwordSalt, 1000, 64, 'sha512').toString('hex');
+  return this.passwordHash === hash;
+}
+
+AccountSchema.methods.setPin = function(pin) {
+  this.pinSalt = crypto.randomBytes(16).toString('hex');
+  this.pinHash = crypto.pbkdf2Sync(pin, this.pinSalt, 1000, 64, 'sha512').toString('hex');
+}
+
+AccountSchema.methods.validatePin = function(pin) {
+  const hash = crypto.pbkdf2Sync(pin, this.pinSalt, 1000, 64, 'sha512').toString('hex');
+  return this.pinHash === hash;
 }
 
 AccountSchema.methods.generateJwt = function() {
