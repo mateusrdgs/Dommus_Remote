@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-      RoomSchema = require('./room'),
+      RoomSchema = require('./room').RoomSchema,
       BoardSchema = require('./board');
 
 mongoose.Promise = global.Promise;

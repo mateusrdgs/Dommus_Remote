@@ -1,8 +1,11 @@
 const mongoose = require('mongoose'),
       sendJsonResponse = require('../helper/helper').sendJsonResponse,
-      updateBoardById = require('./board').updateBoardById,
       Account = mongoose.model('Account'),
-      Component = mongoose.model('Component');
+      SwitchComponent = require('../models/room').SwitchComponent,
+      ThermometherComponent = require('../models/room').ThermometherComponent,
+      MotionComponent = require('../models/room').MotionComponent,
+      SensorComponent = require('../models/room').SensorComponent,
+      ServoComponent = require('../models/room').ServoComponent;
 
 function createComponent(req, res) {
   const { idAccount, idResidence, idRoom } = req.params;
@@ -56,7 +59,7 @@ function createComponent(req, res) {
                 case 1: {
                   let { digitalPin } = req.body;
                   digitalPin = parseInt(digitalPin);
-                  components.push(new Component({
+                  components.push(new SwitchComponent({
                     idBoard,
                     description,
                     type,
@@ -66,12 +69,13 @@ function createComponent(req, res) {
                 }
                 break;
                 case 2: {
-                  let { analogPin, frequency } = req.body;
+                  let { analogPin, frequency, controller } = req.body;
                   analogPin = parseInt(analogPin);
                   frequency = parseInt(frequency);
-                  components.push(new Component({
+                  components.push(new ThermometherComponent({
                     idBoard,
                     description,
+                    controller,
                     type,
                     analogPin,
                     frequency
@@ -80,18 +84,43 @@ function createComponent(req, res) {
                 }
                 break;
                 case 3: {
+                  let { analogPin } = req.body;
+                  analogPin = parseInt(analogPin);
+                  components.push(new MotionComponent({
+                    idBoard,
+                    description,
+                    type,
+                    analogPin,
+                  }));
+                  updateBoardFreePins(residence, idBoard, type, analogPin);
+                }
+                case 4: {
+                  const { controller } = req.body;
+                  let { analogPin, threshold } = req.body;
+                  analogPin = parseInt(analogPin);
+                  components.push(new SensorComponent({
+                    idBoard,
+                    description,
+                    type,
+                    analogPin,
+                    controller,
+                    threshold
+                  }));
+                  updateBoardFreePins(residence, idBoard, type, analogPin);
+                }
+                case 5: {
                   let { digitalPin, rotation, minRange, maxRange } = req.body;
                   digitalPin = parseInt(digitalPin);
                   rotation = parseInt(rotation);
                   minRange = parseInt(minRange);
                   maxRange = parseInt(maxRange);
-                  components.push(new Component({
+                  components.push(new ServoComponent({
                     idBoard,
                     description,
                     type,
                     digitalPin,
                     rotation,
-                    minRange, maxRange
+                    range: [minRange, maxRange]
                   }));
                   updateBoardFreePins(residence, idBoard, type, digitalPin);
                 }
@@ -353,18 +382,33 @@ function updateComponentById(req, res) {
                     }
                     break;
                     case 2: {
-                      const { analogPin, frequency } = req.body;
+                      const { analogPin, frequency, controller } = req.body;
+                      component.controller = controller || component.controller;
                       component.analogPin = parseInt(analogPin) || component.analogPin;
                       component.frequency = parseInt(frequency) || component.frequency;
                       updateBoardFreePins(residence, idBoard, type, analogPin)
                     }
                     break;
                     case 3: {
-                      const { digitalPin, rotation, minRange, maxRange } = req.body.digitalPin;
+                      const { analogPin, controller } = req.body;
+                      component.analogPin = parseInt(analogPin) || component.analogPin;
+                      component.controller = controller || component.controller;
+                      updateBoardFreePins(residence, idBoard, type, analogPin);
+                    }
+                    case 4: {
+                      const { analogPin, controller, threshold, frequency } = req.body;
+                      component.digitalPin = parseInt(analogPin) || component.digitalPin;
+                      component.controller = controller || component.controller;
+                      component.threshold = parseInt(threshold) || component.threshold;
+                      component.frequency = parseInt(frequency) || component.frequency;
+                      updateBoardFreePins(residence, idBoard, type, analogPin)
+                    }
+                    case 5: {
+                      const { digitalPin, rotation, startAt, minRange, maxRange } = req.body;
                       component.digitalPin = parseInt(digitalPin) || component.digitalPin;
                       component.rotation = parseInt(rotation) || component.rotation;
-                      component.minRange = parseInt(minRange) || component.minRange;
-                      component.maxRange = parseInt(maxRange) || component.maxRange;
+                      component.startAt =  parseInt(startAt) || component.range;
+                      component.range = [parseInt(minRange), parseInt(maxRange)] || component.range;
                       updateBoardFreePins(residence, idBoard, type, digitalPin)
                     }
                     break;
