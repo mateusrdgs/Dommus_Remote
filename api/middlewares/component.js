@@ -45,9 +45,9 @@ function createComponent(req, res, next) {
         }
       }
       break;
-      case 2: { // THERMOMETHER
-        const { controller, analogPin, frequency } = req.body;
-        if(!parseInt(analogPin) || !parseInt(frequency) || controller) {
+      case 2: { // THERMOMETER
+        const { analogPin, controller, frequency } = req.body;
+        if(!parseInt(analogPin) || !parseInt(frequency) || !controller) {
           sendJsonResponse(res, 400, {
             'Message': 'Fields controller, analogPin and frequency are required!'
           });
@@ -86,9 +86,9 @@ function createComponent(req, res, next) {
       break;
       case 5: { // SERVO
         const { digitalPin, rotation, startAt, minRange, maxRange } = req.body;
-        if(!parseInt(digitalPin) || !parseInt(rotation) || !parseInt(startAt) || !parseInt(minRange) || !parseInt(maxRange)) {
+        if(!parseInt(digitalPin) || !parseInt(rotation) || (parseInt(startAt) < 0) || (parseInt(minRange) < 0) || !parseInt(maxRange)) {
           sendJsonResponse(res, 400, {
-            'Message': 'Fields digitalPin, rotation, startAt,  minRange and maxRange are required!'
+            'Message': 'Fields digitalPin, rotation, startAt, minRange and maxRange are required!'
           });
           return;
         }
@@ -212,7 +212,7 @@ function updateComponentById(req, res, next) {
       }
     }
     break;
-    case 2: { // THERMOMETHER
+    case 2: { // THERMOMETER
       const { controller, analogPin, frequency } = req.body;
       if(!parseInt(analogPin) || !parseInt(frequency) || controller) {
         sendJsonResponse(res, 400, {

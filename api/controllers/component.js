@@ -2,7 +2,7 @@ const mongoose = require('mongoose'),
       sendJsonResponse = require('../helper/helper').sendJsonResponse,
       Account = mongoose.model('Account'),
       SwitchComponent = require('../models/room').SwitchComponent,
-      ThermometherComponent = require('../models/room').ThermometherComponent,
+      ThermometerComponent = require('../models/room').ThermometerComponent,
       MotionComponent = require('../models/room').MotionComponent,
       SensorComponent = require('../models/room').SensorComponent,
       ServoComponent = require('../models/room').ServoComponent;
@@ -72,7 +72,7 @@ function createComponent(req, res) {
                   let { analogPin, frequency, controller } = req.body;
                   analogPin = parseInt(analogPin);
                   frequency = parseInt(frequency);
-                  components.push(new ThermometherComponent({
+                  components.push(new ThermometerComponent({
                     idBoard,
                     description,
                     controller,
@@ -84,42 +84,50 @@ function createComponent(req, res) {
                 }
                 break;
                 case 3: {
+                  const { controller } = req.body;
                   let { analogPin } = req.body;
                   analogPin = parseInt(analogPin);
                   components.push(new MotionComponent({
                     idBoard,
                     description,
                     type,
+                    controller,
                     analogPin,
                   }));
                   updateBoardFreePins(residence, idBoard, type, analogPin);
                 }
+                break;
                 case 4: {
                   const { controller } = req.body;
-                  let { analogPin, threshold } = req.body;
+                  let { analogPin, threshold, frequency } = req.body;
                   analogPin = parseInt(analogPin);
+                  frequency = parseInt(frequency);
                   components.push(new SensorComponent({
                     idBoard,
                     description,
                     type,
                     analogPin,
+                    frequency,
                     controller,
                     threshold
                   }));
                   updateBoardFreePins(residence, idBoard, type, analogPin);
                 }
+                break;
                 case 5: {
-                  let { digitalPin, rotation, minRange, maxRange } = req.body;
+                  let { digitalPin, rotation, minRange, maxRange, startAt } = req.body;
                   digitalPin = parseInt(digitalPin);
                   rotation = parseInt(rotation);
                   minRange = parseInt(minRange);
                   maxRange = parseInt(maxRange);
+                  startAt = parseInt(startAt);
                   components.push(new ServoComponent({
                     idBoard,
                     description,
                     type,
                     digitalPin,
                     rotation,
+                    startAt,
                     range: [minRange, maxRange]
                   }));
                   updateBoardFreePins(residence, idBoard, type, digitalPin);
@@ -135,7 +143,7 @@ function createComponent(req, res) {
               account.save((error, account) => {
                 if(error) {
                   sendJsonResponse(res, 500, {
-                    'Error': error.errmsg
+                    'Error': error
                   });
                   return;
                 }
@@ -422,7 +430,7 @@ function updateComponentById(req, res) {
                   account.save((error, account) => {
                     if(error) {
                       sendJsonResponse(res, 500, {
-                        'Error': error.errmsg
+                        'Error': error
                       });
                       return;
                     }

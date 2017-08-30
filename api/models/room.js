@@ -1,7 +1,7 @@
 const mongoose = require('mongoose'),
       ComponentSchema = require('./component').ComponentSchema,
       SwitchSchema = require('./component').SwitchSchema,
-      ThermometherSchema = require('./component').ThermometherSchema,
+      ThermometerSchema = require('./component').ThermometerSchema,
       MotionSchema = require('./component').MotionSchema,
       SensorSchema = require('./component').SensorSchema,
       ServoSchema = require('./component').ServoSchema;
@@ -18,7 +18,7 @@ const RoomSchema = new mongoose.Schema({
 mongoose.model('Room', RoomSchema);
 
 const SwitchComponent = RoomSchema.path('components').discriminator(1, SwitchSchema),
-      ThermometherComponent = RoomSchema.path('components').discriminator(2, ThermometherSchema),
+      ThermometerComponent = RoomSchema.path('components').discriminator(2, ThermometerSchema),
       MotionComponent = RoomSchema.path('components').discriminator(3, MotionSchema),
       SensorComponent = RoomSchema.path('components').discriminator(4, SensorSchema),
       ServoComponent = RoomSchema.path('components').discriminator(5, ServoSchema);
@@ -26,7 +26,7 @@ const SwitchComponent = RoomSchema.path('components').discriminator(1, SwitchSch
 module.exports = {
   RoomSchema,
   SwitchComponent,
-  ThermometherComponent,
+  ThermometerComponent,
   MotionComponent,
   SensorComponent,
   ServoComponent

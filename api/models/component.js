@@ -25,7 +25,7 @@ const SwitchSchema = new mongoose.Schema({
   }
 }, childOptions);
 
-const ThermometherSchema = new mongoose.Schema({
+const ThermometerSchema = new mongoose.Schema({
   controller: {
     type: String,
     required: true
@@ -90,7 +90,7 @@ mongoose.model('Component', ComponentSchema);
 module.exports = {
   ComponentSchema,
   SwitchSchema,
-  ThermometherSchema,
+  ThermometerSchema,
   MotionSchema,
   SensorSchema,
   ServoSchema
