@@ -40,6 +40,25 @@ const ThermometerSchema = new mongoose.Schema({
   }
 }, childOptions);
 
+const LightSchema = new mongoose.Schema({
+  controller: {
+    type: String,
+    required: true
+  },
+  analogPin: {
+    type: Number,
+    required: true
+  },
+  frequency: {
+    type: Number,
+    required: true
+  },
+  threshold: {
+    type: Number,
+    required: true
+  }
+}, childOptions);
+
 const MotionSchema = new mongoose.Schema({
   controller: {
     type: String,
@@ -91,6 +110,7 @@ module.exports = {
   ComponentSchema,
   SwitchSchema,
   ThermometerSchema,
+  LightSchema,
   MotionSchema,
   SensorSchema,
   ServoSchema

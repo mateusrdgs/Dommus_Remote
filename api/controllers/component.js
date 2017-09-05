@@ -3,6 +3,7 @@ const mongoose = require('mongoose'),
       Account = mongoose.model('Account'),
       SwitchComponent = require('../models/room').SwitchComponent,
       ThermometerComponent = require('../models/room').ThermometerComponent,
+      LightComponent = require('../models/room').LightComponent,
       MotionComponent = require('../models/room').MotionComponent,
       SensorComponent = require('../models/room').SensorComponent,
       ServoComponent = require('../models/room').ServoComponent;
@@ -84,6 +85,23 @@ function createComponent(req, res) {
                 }
                 break;
                 case 3: {
+                  let { analogPin, frequency, controller, threshold } = req.body;
+                  analogPin = parseInt(analogPin);
+                  frequency = parseInt(frequency);
+                  threshold = parseInt(threshold);
+                  components.push(new LightComponent({
+                    idBoard,
+                    description,
+                    controller,
+                    type,
+                    analogPin,
+                    frequency,
+                    threshold
+                  }));
+                  updateBoardFreePins(residence, idBoard, type, analogPin);
+                }
+                break;
+                case 4: {
                   const { controller } = req.body;
                   let { analogPin } = req.body;
                   analogPin = parseInt(analogPin);
@@ -97,7 +115,7 @@ function createComponent(req, res) {
                   updateBoardFreePins(residence, idBoard, type, analogPin);
                 }
                 break;
-                case 4: {
+                case 5: {
                   const { controller } = req.body;
                   let { analogPin, threshold, frequency } = req.body;
                   analogPin = parseInt(analogPin);
@@ -114,7 +132,7 @@ function createComponent(req, res) {
                   updateBoardFreePins(residence, idBoard, type, analogPin);
                 }
                 break;
-                case 5: {
+                case 6: {
                   let { digitalPin, rotation, minRange, maxRange, startAt } = req.body;
                   digitalPin = parseInt(digitalPin);
                   rotation = parseInt(rotation);
@@ -398,12 +416,21 @@ function updateComponentById(req, res) {
                     }
                     break;
                     case 3: {
+                      const { analogPin, frequency, controller, threshold } = req.body;
+                      component.controller = controller || component.controller;
+                      component.analogPin = parseInt(analogPin) || component.analogPin;
+                      component.frequency = parseInt(frequency) || component.frequency;
+                      component.threshold = parseInt(threshold) || component.threshold;
+                      updateBoardFreePins(residence, idBoard, type, analogPin)
+                    }
+                    break;
+                    case 4: {
                       const { analogPin, controller } = req.body;
                       component.analogPin = parseInt(analogPin) || component.analogPin;
                       component.controller = controller || component.controller;
                       updateBoardFreePins(residence, idBoard, type, analogPin);
                     }
-                    case 4: {
+                    case 5: {
                       const { analogPin, controller, threshold, frequency } = req.body;
                       component.digitalPin = parseInt(analogPin) || component.digitalPin;
                       component.controller = controller || component.controller;
@@ -411,7 +438,7 @@ function updateComponentById(req, res) {
                       component.frequency = parseInt(frequency) || component.frequency;
                       updateBoardFreePins(residence, idBoard, type, analogPin)
                     }
-                    case 5: {
+                    case 6: {
                       const { digitalPin, rotation, startAt, minRange, maxRange } = req.body;
                       component.digitalPin = parseInt(digitalPin) || component.digitalPin;
                       component.rotation = parseInt(rotation) || component.rotation;
