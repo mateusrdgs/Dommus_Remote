@@ -47,7 +47,7 @@ function createComponent(req, res, next) {
       break;
       case 2: { // THERMOMETER
         const { analogPin, controller, frequency } = req.body;
-        if(!parseInt(analogPin) || !parseInt(frequency) || !controller) {
+        if(parseInt(analogPin) < 0 || !parseInt(frequency) || !controller) {
           sendJsonResponse(res, 400, {
             'Message': 'Fields controller, analogPin and frequency are required!'
           });
