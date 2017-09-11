@@ -26,10 +26,6 @@ const SwitchSchema = new mongoose.Schema({
 }, childOptions);
 
 const ThermometerSchema = new mongoose.Schema({
-  controller: {
-    type: String,
-    required: true
-  },
   analogPin: {
     type: Number,
     required: true
@@ -41,10 +37,6 @@ const ThermometerSchema = new mongoose.Schema({
 }, childOptions);
 
 const LightSchema = new mongoose.Schema({
-  controller: {
-    type: String,
-    required: true
-  },
   analogPin: {
     type: Number,
     required: true
@@ -60,21 +52,13 @@ const LightSchema = new mongoose.Schema({
 }, childOptions);
 
 const MotionSchema = new mongoose.Schema({
-  controller: {
-    type: String,
-    required: true
-  },
-  analogPin: {
+  digitalPin: {
     type: Number,
     required: true
   }
 }, childOptions);
 
 const SensorSchema = new mongoose.Schema({
-  controller: {
-    type: String,
-    required: true
-  },
   analogPin: {
     type: Number,
     required: true

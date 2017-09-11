@@ -46,10 +46,10 @@ function createComponent(req, res, next) {
       }
       break;
       case 2: { // THERMOMETER
-        const { analogPin, controller, frequency } = req.body;
-        if(parseInt(analogPin) < 0 || parseInt(frequency) < 1000 || !controller) {
+        const { analogPin, frequency } = req.body;
+        if(parseInt(analogPin) < 0 || parseInt(frequency) < 1000) {
           sendJsonResponse(res, 400, {
-            'Message': 'Fields controller, analogPin and frequency are required!'
+            'Message': 'Fields , analogPin and frequency are required!'
           });
           return;
         }
@@ -59,10 +59,10 @@ function createComponent(req, res, next) {
       }
       break;
       case 3: { // LIGHT
-        const { analogPin, controller, frequency, threshold } = req.body;
-        if(parseInt(analogPin) < 0 || parseInt(frequency) < 1000 || parseInt(threshold) < 0 || !controller) {
+        const { analogPin, frequency, threshold } = req.body;
+        if(parseInt(analogPin) < 0 || parseInt(frequency) < 1000 || parseInt(threshold) < 0) {
           sendJsonResponse(res, 400, {
-            'Message': 'Fields controller, analogPin, frequency and threshold are required!'
+            'Message': 'Fields , analogPin, frequency and threshold are required!'
           });
           return;
         }
@@ -72,10 +72,10 @@ function createComponent(req, res, next) {
       }
       break;
       case 4: { // MOTION
-        const { analogPin, controller } = req.body;
-        if(parseInt(analogPin) < 0 || !controller) {
+        const { digitalPin } = req.body;
+        if(parseInt(digitalPin) < 0) {
           sendJsonResponse(res, 400, {
-            'Message': 'Fields analogPin and controller are required!'
+            'Message': 'Fields digitalPin and  are required!'
           });
           return;
         }
@@ -85,10 +85,10 @@ function createComponent(req, res, next) {
       }
       break;
       case 5: { // SENSOR
-        const { analogPin, controller, threshold, frequency } = req.body;
-        if(parseInt(analogPin) < 0 || !controller || parseInt(threshold) < 0 || parseInt(frequency) < 1000) {
+        const { analogPin, threshold, frequency } = req.body;
+        if(parseInt(analogPin) < 0 || parseInt(threshold) < 0 || parseInt(frequency) < 1000) {
           sendJsonResponse(res, 400, {
-            'Message': 'Fields analogPin, controller, threshold and frequency are required!'
+            'Message': 'Fields analogPin, , threshold and frequency are required!'
           });
           return;
         }
@@ -98,8 +98,9 @@ function createComponent(req, res, next) {
       }
       break;
       case 6: { // SERVO
-        const { digitalPin, rotation, startAt, minRange, maxRange } = req.body;
-        if(parseInt(digitalPin) < 0 || parseInt(rotation) < 0 || (parseInt(startAt) < 0) || (parseInt(minRange) < 0) || !parseInt(maxRange)) {
+        const { digitalPin, rotation, startAt, range } = req.body,
+              [minRange, maxRange] = range;
+        if(parseInt(digitalPin) < 0 || parseInt(rotation) < 0 || (parseInt(startAt) < 0) || (parseInt(minRange) < 0) || parseInt(maxRange) < 0) {
           sendJsonResponse(res, 400, {
             'Message': 'Fields digitalPin, rotation, startAt, minRange and maxRange are required!'
           });
@@ -226,10 +227,10 @@ function updateComponentById(req, res, next) {
     }
     break;
     case 2: { // THERMOMETER
-      const { controller, analogPin, frequency } = req.body;
-      if(parseInt(analogPin) < 0 || parseInt(frequency) < 1000 || !controller) {
+      const { analogPin, frequency } = req.body;
+      if(parseInt(analogPin) < 0 || parseInt(frequency) < 1000) {
         sendJsonResponse(res, 400, {
-          'Message': 'Fields controller, analogPin and frequency are required!'
+          'Message': 'Fields , analogPin and frequency are required!'
         });
         return;
       }
@@ -239,10 +240,10 @@ function updateComponentById(req, res, next) {
     }
     break;
     case 3: { // LIGHT
-      const { analogPin, controller, frequency, threshold } = req.body;
-      if(parseInt(analogPin) < 0 || parseInt(frequency) < 1000 || parseInt(threshold) < 0 || !controller) {
+      const { analogPin, frequency, threshold } = req.body;
+      if(parseInt(analogPin) < 0 || parseInt(frequency) < 1000 || parseInt(threshold) < 0) {
         sendJsonResponse(res, 400, {
-          'Message': 'Fields controller, analogPin, frequency and threshold are required!'
+          'Message': 'Fields , analogPin, frequency and threshold are required!'
         });
         return;
       }
@@ -252,10 +253,10 @@ function updateComponentById(req, res, next) {
     }
     break;
     case 4: { // MOTION
-      const { analogPin, controller } = req.body;
-      if(parseInt(analogPin) < 0 || !controller) {
+      const { digitalPin } = req.body;
+      if(parseInt(digitalPin) < 0) {
         sendJsonResponse(res, 400, {
-          'Message': 'Fields analogPin and controller are required!'
+          'Message': 'Fields digitalPin and  are required!'
         });
         return;
       }
@@ -265,10 +266,10 @@ function updateComponentById(req, res, next) {
     }
     break;
     case 5: { // SENSOR
-      const { analogPin, controller, threshold, frequency } = req.body;
-      if(parseInt(analogPin) < 0 || !controller || parseInt(threshold) < 0 || parseInt(frequency) < 1000) {
+      const { analogPin, threshold, frequency } = req.body;
+      if(parseInt(analogPin) < 0 || parseInt(threshold) < 0 || parseInt(frequency) < 1000) {
         sendJsonResponse(res, 400, {
-          'Message': 'Fields analogPin, controller, threshold and frequency are required!'
+          'Message': 'Fields analogPin, threshold and frequency are required!'
         });
         return;
       }
@@ -278,7 +279,8 @@ function updateComponentById(req, res, next) {
     }
     break;
     case 6: { // SERVO
-      const { digitalPin, rotation, startAt, minRange, maxRange } = req.body;
+      const { digitalPin, rotation, startAt, range } = req.body,
+            [minRange, maxRange] = range;
       if(parseInt(digitalPin) < 0 || parseInt(rotation) < 0 || !parseInt(startAt) || !parseInt(minRange) || !parseInt(maxRange)) {
         sendJsonResponse(res, 400, {
           'Message': 'Fields digitalPin, rotation, startAt,  minRange and maxRange are required!'

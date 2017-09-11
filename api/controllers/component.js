@@ -70,13 +70,12 @@ function createComponent(req, res) {
                 }
                 break;
                 case 2: {
-                  let { analogPin, frequency, controller } = req.body;
+                  let { analogPin, frequency } = req.body;
                   analogPin = parseInt(analogPin);
                   frequency = parseInt(frequency);
                   components.push(new ThermometerComponent({
                     idBoard,
                     description,
-                    controller,
                     type,
                     analogPin,
                     frequency
@@ -85,14 +84,13 @@ function createComponent(req, res) {
                 }
                 break;
                 case 3: {
-                  let { analogPin, frequency, controller, threshold } = req.body;
+                  let { analogPin, frequency, threshold } = req.body;
                   analogPin = parseInt(analogPin);
                   frequency = parseInt(frequency);
                   threshold = parseInt(threshold);
                   components.push(new LightComponent({
                     idBoard,
                     description,
-                    controller,
                     type,
                     analogPin,
                     frequency,
@@ -102,21 +100,18 @@ function createComponent(req, res) {
                 }
                 break;
                 case 4: {
-                  const { controller } = req.body;
-                  let { analogPin } = req.body;
-                  analogPin = parseInt(analogPin);
+                  let { digitalPin } = req.body;
+                  digitalPin = parseInt(digitalPin);
                   components.push(new MotionComponent({
                     idBoard,
                     description,
                     type,
-                    controller,
-                    analogPin,
+                    digitalPin,
                   }));
-                  updateBoardFreePins(residence, idBoard, type, analogPin);
+                  updateBoardFreePins(residence, idBoard, type, digitalPin);
                 }
                 break;
                 case 5: {
-                  const { controller } = req.body;
                   let { analogPin, threshold, frequency } = req.body;
                   analogPin = parseInt(analogPin);
                   frequency = parseInt(frequency);
@@ -126,14 +121,14 @@ function createComponent(req, res) {
                     type,
                     analogPin,
                     frequency,
-                    controller,
                     threshold
                   }));
                   updateBoardFreePins(residence, idBoard, type, analogPin);
                 }
                 break;
                 case 6: {
-                  let { digitalPin, rotation, minRange, maxRange, startAt } = req.body;
+                  let { digitalPin, rotation, range, startAt } = req.body,
+                      [minRange, maxRange] = range;
                   digitalPin = parseInt(digitalPin);
                   rotation = parseInt(rotation);
                   minRange = parseInt(minRange);
@@ -408,16 +403,14 @@ function updateComponentById(req, res) {
                     }
                     break;
                     case 2: {
-                      const { analogPin, frequency, controller } = req.body;
-                      component.controller = controller || component.controller;
+                      const { analogPin, frequency } = req.body;
                       component.analogPin = parseInt(analogPin) || component.analogPin;
                       component.frequency = parseInt(frequency) || component.frequency;
                       updateBoardFreePins(residence, idBoard, type, analogPin)
                     }
                     break;
                     case 3: {
-                      const { analogPin, frequency, controller, threshold } = req.body;
-                      component.controller = controller || component.controller;
+                      const { analogPin, frequency, threshold } = req.body;
                       component.analogPin = parseInt(analogPin) || component.analogPin;
                       component.frequency = parseInt(frequency) || component.frequency;
                       component.threshold = parseInt(threshold) || component.threshold;
@@ -425,21 +418,20 @@ function updateComponentById(req, res) {
                     }
                     break;
                     case 4: {
-                      const { analogPin, controller } = req.body;
+                      const { analogPin } = req.body;
                       component.analogPin = parseInt(analogPin) || component.analogPin;
-                      component.controller = controller || component.controller;
                       updateBoardFreePins(residence, idBoard, type, analogPin);
                     }
                     case 5: {
-                      const { analogPin, controller, threshold, frequency } = req.body;
+                      const { analogPin, threshold, frequency } = req.body;
                       component.digitalPin = parseInt(analogPin) || component.digitalPin;
-                      component.controller = controller || component.controller;
                       component.threshold = parseInt(threshold) || component.threshold;
                       component.frequency = parseInt(frequency) || component.frequency;
                       updateBoardFreePins(residence, idBoard, type, analogPin)
                     }
                     case 6: {
-                      const { digitalPin, rotation, startAt, minRange, maxRange } = req.body;
+                      const { digitalPin, rotation, startAt, range } = req.body,
+                            [minRange, maxRange] = range;
                       component.digitalPin = parseInt(digitalPin) || component.digitalPin;
                       component.rotation = parseInt(rotation) || component.rotation;
                       component.startAt =  parseInt(startAt) || component.range;
