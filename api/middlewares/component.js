@@ -198,7 +198,7 @@ function updateComponentById(req, res, next) {
     });
     return;
   }
-  else if(!idComponent || !Object.isValid(idComponent)) {
+  else if(!idComponent || !ObjectId.isValid(idComponent)) {
     sendJsonResponse(res, 400, {
       'Messsage': 'Component Id is required!'
     });
