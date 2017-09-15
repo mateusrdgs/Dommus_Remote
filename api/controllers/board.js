@@ -207,7 +207,7 @@ function updateBoardById(req, res) {
           return;
         }
         else {
-          const boards = residence.board;
+          const boards = residence.boards;
           if(!boards.length) {
             sendJsonResponse(res, 404, {
               'Message': 'No boards on this residence!'
