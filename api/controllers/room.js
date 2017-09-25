@@ -174,7 +174,7 @@ function returnRoomById(req, res) {
 
 function updateRoomById(req, res) {
   const { idAccount, idResidence, idRoom } = req.params;
-  const { description } = req.params;
+  const { description } = req.body;
   Account
   .findById(idAccount)
   .then(account => {
