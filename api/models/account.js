@@ -15,8 +15,6 @@ const AccountSchema = new mongoose.Schema({
   },
   passwordSalt: String,
   passwordHash: String,
-  pinSalt: String,
-  pinHash: String,
   residences: [ResidenceSchema],
   users: [UserSchema]
 });
@@ -31,14 +29,8 @@ AccountSchema.methods.validatePassword = function(password) {
   return this.passwordHash === hash;
 }
 
-AccountSchema.methods.setPin = function(pin) {
-  this.pinSalt = crypto.randomBytes(16).toString('hex');
-  this.pinHash = crypto.pbkdf2Sync(pin, this.pinSalt, 1000, 64, 'sha512').toString('hex');
-}
-
-AccountSchema.methods.validatePin = function(pin) {
-  const hash = crypto.pbkdf2Sync(pin, this.pinSalt, 1000, 64, 'sha512').toString('hex');
-  return this.pinHash === hash;
+AccountSchema.methods.updatePassword = function(newPassword) {
+  this.passwordHash = crypto.pbkdf2Sync(newPassword, this.passwordSalt, 1000, 64, 'sha512').toString('hex');
 }
 
 AccountSchema.methods.generateJwt = function() {

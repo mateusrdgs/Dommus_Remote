@@ -78,6 +78,7 @@ function returnRooms(req, res) {
         sendJsonResponse(res, 404, {
           'Message': 'No residences found on this account!'
         });
+        return;
       }
       else {
         const residence = residences.id(idResidence);
@@ -89,7 +90,7 @@ function returnRooms(req, res) {
         }
         else {
           const rooms = residence.rooms;
-          if(!rooms) {
+          if(!rooms.length) {
             sendJsonResponse(res, 404, {
               'Message': 'No rooms found on this residence!'
             });
@@ -129,6 +130,7 @@ function returnRoomById(req, res) {
         sendJsonResponse(res, 404, {
           'Message': 'No residences found on this account!'
         });
+        return;
       }
       else {
         const residence = residences.id(idResidence);

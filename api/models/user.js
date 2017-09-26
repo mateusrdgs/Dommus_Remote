@@ -39,6 +39,10 @@ AdminUserSchema.methods.validatePin = function(pin) {
   return this.hashPin === hashPin;
 }
 
+AdminUserSchema.methods.updatePin = function(newPin) {
+  this.hashPin = crypto.pbkdf2Sync(newPin, this.saltPin, 1000, 64, 'sha512').toString('hex');
+}
+
 AdminUserSchema.methods.generateJwt = function() {
   const expiration = new Date();
   expiration.setDate(expiration.getDate() + 7);

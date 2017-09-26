@@ -53,6 +53,7 @@ function returnResidences(req, res) {
       sendJsonResponse(res, 404, {
         'Message': 'Account not found!'
       });
+      return;
     }
     else {
       const residences = account.residences;

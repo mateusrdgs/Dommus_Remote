@@ -11,7 +11,6 @@ function createAccount(req, res) {
   });
   createStarterUser(account, name, pin);
   account.setPassword(password);
-  account.setPin(pin);
   account.save((error, account) => {
     if(error) {
       sendJsonResponse(res, 404, error);
@@ -72,7 +71,7 @@ function returnAccount(req, res) {
 
 function updateAccount(req, res) {
   const { idAccount } = req.params;
-  const { email, pin } = req.body;
+  const { email, password } = req.body;
   Account
   .findById(idAccount)
   .then((account) => {
@@ -83,7 +82,7 @@ function updateAccount(req, res) {
     }
     else {
       account.email = email || account.email;
-      account.pin = pin || account.pin;
+      account.setPassword(password);
       account.save((error, account) => {
         if(error) {
           sendJsonResponse(res, 500, { 
