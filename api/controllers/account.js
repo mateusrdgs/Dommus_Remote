@@ -122,7 +122,7 @@ function deleteAccount(req, res) {
     sendJsonResponse(res, 500, {
       'Error': error.message
     });
-  });  
+  });
 }
 
 module.exports = {

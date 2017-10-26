@@ -6,12 +6,11 @@ const mongoose = require('mongoose'),
 
 function createUser(req, res) {
   const { idAccount } = req.params;
-  let { name, isAdmin, pin } = req.body;
-  isAdmin = isAdmin === 'true' ? true: false;
+  const { name, isAdmin, pin } = req.body;
   Account
   .findById(idAccount)
   .then(account => {
-    if(!account) {          
+    if(!account) {
       sendJsonResponse(res, 404, {
         'Message': 'Account not found!'
       });

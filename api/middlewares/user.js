@@ -1,24 +1,51 @@
 const mongoose  = require('mongoose'),
       sendJsonResponse = require('../helper/helper').sendJsonResponse,
+      Account = mongoose.model('Account'),
       ObjectId = mongoose.Types.ObjectId;
 
 function createUser(req, res, next) {
   const { idAccount } = req.params;
-  const { name, isAdmin } = req.body;
+  const { name, isAdmin, pin, password } = req.body;
   if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!name || !isAdmin) {
+  else if(!name || isAdmin === null || isAdmin === undefined || !pin) {
     sendJsonResponse(res, 400, {
-      'Message': 'Fields name and isAdmin are required!'
+      'Message': 'Fields name, isAdmin and pin are required!'
     });
     return;
   }
   else {
-    next();
+    if(isAdmin && !password) {
+      sendJsonResponse(res, 400, {
+        'Message': 'Field password is required!'
+      });
+    }
+    else {
+      Account
+      .findById(idAccount)
+      .then(account => {
+        if(!account) {
+          sendJsonResponse(res, 404, {
+            'Message': 'Account not found!'
+          });
+        }
+        else {
+          const valid = account.validatePassword(password);
+          if(valid) {
+            next();
+          }
+          else {
+            sendJsonResponse(res, 400, {
+              'Message': 'Invalid password'
+            });
+          }
+        }
+      });
+    }
   }
 }
 
