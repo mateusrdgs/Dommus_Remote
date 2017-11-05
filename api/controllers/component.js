@@ -58,13 +58,14 @@ function createComponent(req, res) {
                 type = parseInt(type);
                 switch (type) {
                   case 1: {
-                    let { digitalPin } = req.body;
+                    let { digitalPin, command } = req.body;
                     digitalPin = parseInt(digitalPin);
                     components.push(new SwitchComponent({
                       idBoard,
                       description,
                       type,
-                      digitalPin
+                      digitalPin,
+                      command
                     }));
                     updateBoardFreePins(false, residence, idBoard, type, digitalPin, 0);
                   }
@@ -127,7 +128,7 @@ function createComponent(req, res) {
                   }
                     break;
                   case 6: {
-                    let { digitalPin, rotation, range, startAt } = req.body,
+                    let { digitalPin, rotation, range, startAt, command } = req.body,
                       [minRange, maxRange] = range;
                     digitalPin = parseInt(digitalPin);
                     rotation = parseInt(rotation);
@@ -141,6 +142,7 @@ function createComponent(req, res) {
                       digitalPin,
                       rotation,
                       startAt,
+                      command,
                       range: [minRange, maxRange]
                     }));
                     updateBoardFreePins(false, residence, idBoard, type, digitalPin, 0);
@@ -396,7 +398,7 @@ function updateComponentById(req, res) {
                     component.type = parseInt(type) || component.type;
                     switch (type) {
                       case 1: {
-                        const { digitalPin } = req.body,
+                        const { digitalPin, command } = req.body,
                               parsedDigitalPin = parseInt(digitalPin),
                               previousDigitalPin = component.digitalPin;
                         component.digitalPin = parsedDigitalPin || component.digitalPin;
@@ -406,6 +408,7 @@ function updateComponentById(req, res) {
                         else {
                           updateBoardFreePins(false, residence, idBoard, type, previousDigitalPin, 0);
                         }
+                        component.command = command || component.command;
                       }
                         break;
                       case 2: {
@@ -464,7 +467,7 @@ function updateComponentById(req, res) {
                         component.frequency = parseInt(frequency) || component.frequency;
                       }
                       case 6: {
-                        const { digitalPin, rotation, startAt, range } = req.body,
+                        const { digitalPin, rotation, startAt, command, range } = req.body,
                               [minRange, maxRange] = range,
                               parsedDigitalPin = parseInt(digitalPin),
                               previousDigitalPin = component.digitalPin;
@@ -475,6 +478,7 @@ function updateComponentById(req, res) {
                         else {
                           updateBoardFreePins(false, residence, idBoard, type, previousDigitalPin, 0);
                         }
+                        component.command = command || component.command;
                         component.rotation = parseInt(rotation) || component.rotation;
                         component.startAt = parseInt(startAt) || component.range;
                         component.range = [parseInt(minRange), parseInt(maxRange)] || component.range;

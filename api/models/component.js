@@ -22,6 +22,10 @@ const SwitchSchema = new mongoose.Schema({
   digitalPin: {
     type: Number,
     required: true
+  },
+  command: {
+    type: [String],
+    required: true
   }
 }, childOptions);
 
@@ -76,6 +80,10 @@ const SensorSchema = new mongoose.Schema({
 const ServoSchema = new mongoose.Schema({
   digitalPin: {
     type: Number,
+    required: true
+  },
+  command: {
+    type: String,
     required: true
   },
   startAt: {

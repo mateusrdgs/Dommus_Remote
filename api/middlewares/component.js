@@ -4,7 +4,7 @@ const mongoose = require('mongoose'),
 
 function createComponent(req, res, next) {
   const { idAccount, idResidence, idRoom } = req.params;
-  const { idBoard, description  } = req.body;
+  const { idBoard, description } = req.body;
   let { type } = req.body;
   if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
@@ -33,15 +33,30 @@ function createComponent(req, res, next) {
     type = parseInt(type);
     switch(type) {
       case 1: { // LED
-        const { digitalPin } = req.body;
-        if(parseInt(digitalPin) < 0) {
+        const { digitalPin, command } = req.body;
+        if(parseInt(digitalPin) < 0 || !Array.isArray(command)) {
           sendJsonResponse(res, 400, {
-            'Message': 'Field digitalPin is required!'
+            'Message': 'Fields digitalPin and command are required!'
           });
           return;
         }
+        else if(command.length) {
+          const [ on, off ] = command;
+          if(!on || !off) {
+            sendJsonResponse(res, 400, {
+              'Message': 'Fields on and off command are required!'
+            });
+            return;
+          }
+          else {
+            next();
+          }
+        }
         else {
-          next();
+          sendJsonResponse(res, 400, {
+            'Message': 'Invalid command field'
+          });
+          return;
         }
       }
       break;
@@ -98,11 +113,11 @@ function createComponent(req, res, next) {
       }
       break;
       case 6: { // SERVO
-        const { digitalPin, rotation, startAt, range } = req.body,
+        const { digitalPin, command, rotation, startAt, range } = req.body,
               [minRange, maxRange] = range;
-        if(parseInt(digitalPin) < 0 || parseInt(rotation) < 0 || (parseInt(startAt) < 0) || (parseInt(minRange) < 0) || parseInt(maxRange) < 0) {
+        if(parseInt(digitalPin) < 0 || !command || parseInt(rotation) < 0 || (parseInt(startAt) < 0) || (parseInt(minRange) < 0) || parseInt(maxRange) < 0) {
           sendJsonResponse(res, 400, {
-            'Message': 'Fields digitalPin, rotation, startAt, minRange and maxRange are required!'
+            'Message': 'Fields digitalPin, command, rotation, startAt, minRange and maxRange are required!'
           });
           return;
         }
@@ -178,7 +193,7 @@ function returnAndDeleteComponentById(req, res, next) {
 
 function updateComponentById(req, res, next) {
   const { idAccount, idResidence, idRoom, idComponent } = req.params;
-  const { idBoard, description  } = req.body;
+  const { idBoard, description } = req.body;
   let { type } = req.body;
   if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
@@ -214,15 +229,30 @@ function updateComponentById(req, res, next) {
     type = parseInt(type);
     switch(type) {
     case 1: { // LED
-      const { digitalPin } = req.body;
-      if(parseInt(digitalPin) < 0) {
+      const { digitalPin, command } = req.body;
+      if(parseInt(digitalPin) < 0 || !Array.isArray(command)) {
         sendJsonResponse(res, 400, {
-          'Message': 'Field digitalPin is required!'
+          'Message': 'Fields digitalPin and command are required!'
         });
         return;
       }
+      else if(command.length) {
+        const [ on, off ] = command;
+        if(!on || !off) {
+          sendJsonResponse(res, 400, {
+            'Message': 'Fields on and off command are required!'
+          });
+          return;
+        }
+        else {
+          next();
+        }
+      }
       else {
-        next();
+        sendJsonResponse(res, 400, {
+          'Message': 'Invalid command field'
+        });
+        return;
       }
     }
     break;
@@ -279,11 +309,11 @@ function updateComponentById(req, res, next) {
     }
     break;
     case 6: { // SERVO
-      const { digitalPin, rotation, startAt, range } = req.body,
+      const { digitalPin, command, rotation, startAt, range } = req.body,
             [minRange, maxRange] = range;
-      if(parseInt(digitalPin) < 0 || parseInt(rotation) < 0 || !parseInt(startAt) || !parseInt(minRange) || !parseInt(maxRange)) {
+      if(parseInt(digitalPin) < 0 || command || parseInt(rotation) < 0 || !parseInt(startAt) || !parseInt(minRange) || !parseInt(maxRange)) {
         sendJsonResponse(res, 400, {
-          'Message': 'Fields digitalPin, rotation, startAt,  minRange and maxRange are required!'
+          'Message': 'Fields digitalPin, command, rotation, startAt,  minRange and maxRange are required!'
         });
         return;
       }
