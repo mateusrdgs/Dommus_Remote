@@ -2,7 +2,9 @@ require('dotenv').config({ path: '.env' });
 require('./api/config/database');
 require('./api/config/passport');
 
-const express = require('express'),
+const fs = require('fs'),
+      https = require('https'),
+      express = require('express'),
       helmet = require('helmet'),
       bodyParser  = require('body-parser'),
       morgan = require ('morgan'),
@@ -21,4 +23,13 @@ app.use(passport.initialize());
 
 app.use('/api', routes);
 
-app.listen(port || process.env.PORT, () => console.log(`Express listening on port ${port}`));
+const options = {
+      key: fs.readFileSync('/etc/openssl/remote-key.pem'),
+      cert: fs.readFileSync('/etc/openssl/remote-cert.pem'),
+      passphrase: process.env.PASSPHRASE,
+      requestCert: false,
+      rejectUnauthorized: false
+}
+
+https.createServer(options, app)
+     .listen(port || process.env.PORT, () => console.log(`Express listening on port ${port}`));
