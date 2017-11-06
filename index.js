@@ -3,7 +3,7 @@ require('./api/config/database');
 require('./api/config/passport');
 
 const fs = require('fs'),
-      https = require('https'),
+      http = require('http'),
       express = require('express'),
       helmet = require('helmet'),
       bodyParser  = require('body-parser'),
@@ -23,13 +23,13 @@ app.use(passport.initialize());
 
 app.use('/api', routes);
 
-const options = {
+/*const options = {
       key: fs.readFileSync('/etc/openssl/remote-key.pem'),
       cert: fs.readFileSync('/etc/openssl/remote-cert.pem'),
       passphrase: process.env.PASSPHRASE,
       requestCert: false,
       rejectUnauthorized: false
-}
+}*/
 
-https.createServer(options, app)
+http.createServer(app)
      .listen(port || process.env.PORT, () => console.log(`Express listening on port ${port}`));
