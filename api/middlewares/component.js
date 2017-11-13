@@ -121,8 +121,22 @@ function createComponent(req, res, next) {
           });
           return;
         }
+        else if(command.length) {
+          const [ cmd ] = command;
+          if(!cmd) {
+            sendJsonResponse(res, 400, {
+              'Message': 'Field command is required!'
+            });
+          }
+          else {
+            next();
+          }
+        }
         else {
-          next();
+          sendJsonResponse(res, 400, {
+            'Message': 'Invalid command field'
+          });
+          return;
         }
       }
       break;

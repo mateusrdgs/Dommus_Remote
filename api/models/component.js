@@ -93,6 +93,10 @@ const ServoSchema = new mongoose.Schema({
   range: {
     type: [Number],
     required: true
+  },
+  command: {
+    type: [String],
+    required: true
   }
 }, childOptions);
 
