@@ -1,27 +1,28 @@
 const mongoose  = require('mongoose'),
       sendJsonResponse = require('../helper/helper').sendJsonResponse,
       Account = mongoose.model('Account'),
+      AdminUser = require('../models/account').AdminUser,
       ObjectId = mongoose.Types.ObjectId;
 
 function createUser(req, res, next) {
   const { idAccount } = req.params;
-  const { name, isAdmin, pin, password } = req.body;
+  const { name, isAdmin, pin, adminPin } = req.body;
   if(!idAccount || !ObjectId.isValid(idAccount)) {
     sendJsonResponse(res, 400, {
       'Message': 'Account Id is required!'
     });
     return;
   }
-  else if(!name || isAdmin === null || isAdmin === undefined || !pin) {
+  else if(!name || (isAdmin === null || isAdmin === undefined)) {
     sendJsonResponse(res, 400, {
       'Message': 'Fields name, isAdmin and pin are required!'
     });
     return;
   }
   else {
-    if(isAdmin && !password) {
+    if(isAdmin && !adminPin && !pin) {
       sendJsonResponse(res, 400, {
-        'Message': 'Field password is required!'
+        'Message': 'Fields adminPin and pin are required!'
       });
     }
     else {
@@ -34,13 +35,14 @@ function createUser(req, res, next) {
           });
         }
         else {
-          const valid = account.validatePassword(password);
+          const users = account.users,
+                valid = users.some(user => user.validatePin(adminPin))
           if(valid) {
             next();
           }
           else {
             sendJsonResponse(res, 400, {
-              'Message': 'Invalid password'
+              'Message': 'Invalid adminPin'
             });
           }
         }

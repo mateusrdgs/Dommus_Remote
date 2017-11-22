@@ -48,6 +48,8 @@ mongoose.model('Account', AccountSchema);
 const AdminUser = AccountSchema.path('users').discriminator(true, AdminUserSchema);
 const CommonUser = AccountSchema.path('users').discriminator(false, CommonUserSchema);
 
+console.log(AdminUser.methods);
+
 module.exports = {
   AccountSchema,
   AdminUser,
