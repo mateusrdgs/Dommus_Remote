@@ -653,7 +653,9 @@ function updateBoardFreePins(isUpdate, residence, idBoard, type, newPinValue, pr
           case 6: {
             const digitalPins = board.digitalPins,
                   currentPinIndex = digitalPins.indexOf(newPinValue);
-            digitalPins.splice(currentPinIndex, 1);
+            if(currentPinIndex >= 0) {
+              digitalPins.splice(currentPinIndex, 1);
+            }
             break;
           }
           case 2:
@@ -661,7 +663,9 @@ function updateBoardFreePins(isUpdate, residence, idBoard, type, newPinValue, pr
           case 5: {
             const analogPins = board.analogPins,
                   currentPinIndex = analogPins.indexOf(newPinValue);
-            analogPins.splice(currentPinIndex, 1);
+            if(currentPinIndex >= 0) {
+              analogPins.splice(currentPinIndex, 1);
+            }
             break;
           }
           default: {
