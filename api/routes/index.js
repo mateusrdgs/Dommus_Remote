@@ -53,7 +53,7 @@ router.get('/account/:idAccount/residences/:idResidence/rooms/:idRoom/components
 router.post('/account/:idAccount/residences/:idResidence/rooms/:idRoom/components/new', [auth, componentMiddleware.createComponent], componentController.createComponent);
 router.get('/account/:idAccount/residences/:idResidence/rooms/:idRoom/components/:idComponent', [auth, componentMiddleware.returnAndDeleteComponentById], componentController.returnComponentById);
 router.put('/account/:idAccount/residences/:idResidence/rooms/:idRoom/components/:idComponent', [auth, componentMiddleware.updateComponentById], componentController.updateComponentById);
-router.delete('/account/:idAccount/residences/:idResidence/rooms/:idRoom/component/:idComponent', [auth, componentMiddleware.returnAndDeleteComponentById], componentController.deleteComponentById);
+router.delete('/account/:idAccount/residences/:idResidence/rooms/:idRoom/components/:idComponent', [auth, componentMiddleware.returnAndDeleteComponentById], componentController.deleteComponentById);
 
 router.all('*', (req, res) => sendJsonResponse(res, 404, { 'Message': 'Invalid route!' }));
 

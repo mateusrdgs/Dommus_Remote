@@ -580,21 +580,23 @@ function deleteComponentById(req, res) {
                     return;
                   }
                   else {
-                    component.remove();
-                    account.save((error, account) => {
-                      if (error) {
-                        sendJsonResponse(res, 500, {
-                          'Error': error.message
-                        });
-                        return;
-                      }
-                      else {
-                        sendJsonResponse(res, 200, {
-                          'Message': 'Component removed!'
-                        });
-                        return;
-                      }
-                    });
+                    if(freeBoardPin(residence, component.idBoard, component.type, (component.digitalPin || component.analogPin))) {
+                      component.remove();
+                      account.save((error, account) => {
+                        if (error) {
+                          sendJsonResponse(res, 500, {
+                            'Error': error.message
+                          });
+                          return;
+                        }
+                        else {
+                          sendJsonResponse(res, 200, {
+                            'Message': 'Component removed!'
+                          });
+                          return;
+                        }
+                      });
+                    }
                   }
                 }
               }
@@ -675,6 +677,42 @@ function updateBoardFreePins(isUpdate, residence, idBoard, type, newPinValue, pr
       }
     }
   }
+}
+
+function freeBoardPin(residence, idBoard, type, pinValue) {
+  const { boards } = residence;
+  if(Array.isArray(boards) && boards.length) {
+    const { boards } = residence;
+    if(Array.isArray(boards) && boards.length) {
+      const board = boards.id(idBoard);
+      if(board) {
+        switch(parseInt(type)) {
+          case 1:
+          case 4:
+          case 6: {
+            const { digitalPins } = board;
+            if(Array.isArray(digitalPins)) {
+              digitalPins.push(pinValue);
+              return true;
+            }
+          }
+          case 2:
+          case 3:
+          case 5: {
+            const { analogPins } = board;
+            if(Array.isArray(analogPins)) {
+              analogPins.push(pinValue);
+              return true;
+            }
+          }
+          default: {
+            break;
+          }
+        }
+      }
+    }
+  }
+  return false;
 }
 
 module.exports = {
