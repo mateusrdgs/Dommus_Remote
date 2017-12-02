@@ -83,6 +83,32 @@ function returnAndDeleteUserById(req, res, next) {
   }
 }
 
+function validateUserPin(req, res, next) {
+  const { idAccount, idUser } = req.params,
+        { pin } = req.body;
+  if(!idAccount || !ObjectId.isValid(idAccount)) {
+    sendJsonResponse(res, 400, {
+      'Message': 'Account Id is required!'
+    });
+    return;
+  }
+  else if(!idUser || !ObjectId.isValid(idUser)) {
+    sendJsonResponse(res, 400, {
+      'Message': 'User Id is required!'
+    });
+    return;
+  }
+  else if (!pin) {
+    sendJsonResponse(res, 400, {
+      'Message': 'User pin is required!'
+    });
+    return;
+  }
+  else {
+    next();
+  }
+}
+
 function updateUserById(req, res, next) {
   const { idAccount, idUser } = req.params;
   const { name, isAdmin } = req.body;
@@ -112,5 +138,6 @@ module.exports = {
   createUser,
   returnUsers,
   returnAndDeleteUserById,
+  validateUserPin,
   updateUserById
 }

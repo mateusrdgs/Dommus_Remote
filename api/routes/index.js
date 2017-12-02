@@ -27,6 +27,7 @@ router.delete('/account/:idAccount', accountMiddleware.returnAndDeleteAccount, a
 
 router.get('/account/:idAccount/users', [auth, userMiddleware.returnUsers], userController.returnUsers);
 router.post('/account/:idAccount/users/new', [auth, userMiddleware.createUser], userController.createUser);
+router.post('/account/:idAccount/users/:idUser/validate', [auth, userMiddleware.validateUserPin], userController.validateUserPin);
 router.get('/account/:idAccount/users/:idUser', [auth, userMiddleware.returnAndDeleteUserById], userController.returnUserById);
 router.put('/account/:idAccount/users/:idUser', [auth, userMiddleware.updateUserById], userController.updateUserById);
 router.delete('/account/:idAccount/users/:idUser', [auth, userMiddleware.returnAndDeleteUserById], userController.deleteUserById);

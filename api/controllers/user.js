@@ -132,6 +132,50 @@ function returnUserById(req, res) {
   });
 }
 
+function validateUserPin(req, res) {
+  const { idAccount, idUser } = req.params,
+        { pin } = req.body;
+  Account
+  .findById(idAccount)
+  .then(account => {
+    if(!account) {
+      sendJsonResponse(res, 404, {
+        'Message': 'Account not found!'
+      });
+      return;
+    }
+    else {
+      const users = account.users;
+      if(!users) {
+        sendJsonResponse(res, 404, {
+          'Message': 'No users on this account!'
+        });
+        return;
+      }
+      else {
+        const user = users.id(idUser);
+        if(!user) {
+          sendJsonResponse(res, 404, {
+            'Message': 'User not found!'
+          });
+          return;
+        }
+        else {
+          sendJsonResponse(res, 200, {
+            'isValid': user.validatePin(pin)
+          });
+          return;
+        }
+      }
+    }
+  }, error => {
+    sendJsonResponse(res, 500, {
+      'Error': error.message
+    });
+    return;
+  });
+}
+
 function updateUserById(req, res) {
   const { idAccount, idUser } = req.params;
   const { name, type } = req.body;
@@ -244,6 +288,7 @@ module.exports = {
   createUser,
   returnUsers,
   returnUserById,
+  validateUserPin,
   updateUserById,
   deleteUserById
 }
