@@ -22,8 +22,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 
-app.use('/', dist);
 app.use('/api', api);
+app.use('/', dist);
 
 http.createServer(app)
      .listen(port || process.env.PORT, () => console.log(`Express listening on port ${port}`));
